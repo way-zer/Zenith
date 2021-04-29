@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1280,720" overflow="hidden" opaque="false" bgColorEnabled="true">
+  <displayList>
+    <text id="n12_t5xr" name="score" xy="523,0" size="234,90" fontSize="32" align="center" vAlign="middle" autoSize="none" text="1000"/>
+    <graph id="n20_p941" name="background" xy="1049,47" size="215,302" group="n21_p941" alpha="0.3" type="rect" fillColor="#ff000000" corner="16"/>
+    <list id="n16_10a9g" name="list" xy="1053,97" size="205,247" group="n21_p941" selectionMode="none" overflow="hidden" defaultItem="ui://67fzhugfq66rc" autoClearItems="true" scrollItemToViewOnClick="false">
+      <item title="test01" name="1"/>
+      <item title="2"/>
+      <item title="3"/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+    <text id="n36_sow0" name="n36" xy="1111,61" size="91,36" group="n21_p941" fontSize="24" shadowColor="#000000" shadowOffset="1,1" text="排行榜"/>
+    <group id="n21_p941" name="ranklist" xy="1049,47" size="215,302"/>
+    <group id="n24_p941" name="n24" xy="1055,382" size="212,100"/>
+    <graph id="n22_p941" name="n22" xy="1055,382" size="212,100" group="n24_p941" visible="false" alpha="0.3" type="rect" fillColor="#ff000000" corner="8"/>
+    <text id="n23_p941" name="title" xy="1055,402" size="127,19" group="n26_p941" visible="false" fontSize="12" autoSize="none" text="资源"/>
+    <text id="n25_p941" name="number" xy="1198,403" size="68,19" group="n26_p941" visible="false" fontSize="12" autoSize="none" text="000&#xA;"/>
+    <group id="n26_p941" name="infomation_" xy="1055,402" size="211,20" group="n24_p941"/>
+    <graph id="n14_t5xr" name="n14" xy="1052,511" size="212,180" group="n27_p941" alpha="0.25" type="rect" fillColor="#ff000000"/>
+    <loader id="n8_t5xr" name="miniMap" xy="1057,514" size="201,173" group="n27_p941"/>
+    <group id="n27_p941" name="miniMapG" xy="1052,511" size="212,180"/>
+    <component id="n35_p941" name="createUnit" src="p941d" fileName="Hub/Button_CreateIcon.xml" xy="402,635"/>
+  </displayList>
+</component>

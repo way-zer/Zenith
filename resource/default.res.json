@@ -2,7 +2,7 @@
   "groups": [
     {
       "name": "preload",
-      "keys": "bgGrid,MainMenu,MainMenu_atlas0"
+      "keys": "bgGrid,MainMenu,MainMenu_atlas0,UI"
     }
   ],
   "resources": [
@@ -17,6 +17,11 @@
       "name": "Bag",
       "type": "bin",
       "url": "assets/UI/Bag.fui"
+    },
+    {
+      "name": "UI",
+      "type": "bin",
+      "url": "assets/UI/UI.fui"
     },
     {
       "name": "Bag_atlas0",

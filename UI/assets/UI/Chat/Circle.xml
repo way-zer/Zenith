@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="100,100">
+  <displayList>
+    <graph id="n0_p941" name="n0" xy="0,0" size="100,100" type="eclipse" lineColor="#ffffffff"/>
+    <graph id="n1_p941" name="n1" xy="50,0" size="50,50" type="rect" fillColor="#ffcc0000"/>
+    <graph id="n2_p941" name="n2" xy="50,50" size="50,50" type="rect" fillColor="#ff00ff00"/>
+    <graph id="n3_p941" name="n3" xy="0,50" size="50,50" type="rect" fillColor="#ff112c88"/>
+    <graph id="n4_p941" name="n4" xy="0,0" size="50,50" type="rect" fillColor="#ffccff00"/>
+  </displayList>
+</component>

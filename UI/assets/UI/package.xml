@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="67fzhugf">
+  <resources>
+    <component id="eiz60" name="StartMenu.xml" path="/Start/" exported="true"/>
+    <component id="t5xr5" name="Button_Start.xml" path="/Start/"/>
+    <component id="t5xr8" name="GameHub.xml" path="/Hub/" exported="true"/>
+    <component id="q66rc" name="rankListItem.xml" path="/Hub/" exported="true"/>
+    <component id="p941d" name="Button_CreateIcon.xml" path="/Hub/"/>
+    <component id="p941e" name="Circle.xml" path="/Chat/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>

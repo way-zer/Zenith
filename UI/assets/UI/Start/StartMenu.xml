@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1280,720" overflow="hidden" initName="BackGround" designImageAlpha="30" bgColorEnabled="true" bgColor="#cccccc">
+  <displayList>
+    <component id="n28_t5xr" name="btn" src="t5xr5" fileName="Start/Button_Start.xml" xy="460,479">
+      <Button titleColor="#000000" titleFontSize="75"/>
+    </component>
+    <graph id="n37_sow0" name="TitleBack" xy="640,220" pivot="0.5,0.5" anchor="true" size="640,360" group="n36_sow0" type="rect" corner="45"/>
+    <text id="n35_sow0" name="English" xy="545,68" size="189,79" group="n36_sow0" font="CommercialScript" fontSize="60" autoSize="shrink" text="Zenith"/>
+    <text id="n32_sow0" name="标题_增" xy="395,116" size="204,254" group="n34_sow0" font="STXinwei" fontSize="200" text="增">
+      <relation target="n33_sow0" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n33_sow0" name="标题_城" xy="681,114" size="204,254" group="n34_sow0" font="STXinwei" fontSize="200" text="城"/>
+    <group id="n34_sow0" name="Chinese" xy="395,114" size="490,256" group="n36_sow0"/>
+    <group id="n36_sow0" name="title" xy="320,40" size="640,360"/>
+  </displayList>
+</component>
