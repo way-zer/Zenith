@@ -1,35 +1,45 @@
 import {Core} from "../entities/Core";
-import {BaseUnit, UnitBody} from "../entities/BaseUnit";
+import {BaseUnit} from "../entities/BaseUnit";
 import {TheWorld} from "../ui/TheWorld";
 import {displayToP2, setRandomPosition} from "../util";
 import DisplayObject = egret.DisplayObject;
+import {UnitBody} from '../entities/comp/PhysicBody'
 
 export class EntityMgr extends egret.DisplayObjectContainer {
+    children = new Set<BaseUnit>()
 
     constructor(private world: TheWorld) {
         super();
         world.addChild(this)
+        BaseUnit.world = world
+        for (let i = 0; i < 50; i++) {
+            this.addUnit(new Core())
+        }
     }
 
-    addChild(child: BaseUnit): DisplayObject {
-        setRandomPosition(this.world, child)
-        displayToP2(child, child.body)
-        this.world.physics.addBody(child.body)
-        child.body.on(UnitBody.Event_Impact, (e: { other: p2.Body }) => {
-            this.onPickResource(child, e.other)
-        })
-        return super.addChild(child);
+    addUnit(child: BaseUnit): DisplayObject {
+        setRandomPosition(this.world, child.display)
+        displayToP2(child.display, child.physic)
+        this.world.physics.addBody(child.physic)
+        this.children.add(child)
+        return this.addChild(child.display);
     }
 
     addCore(): Core {
         const inst = new Core()
-        this.addChild(inst)
+        this.addUnit(inst)
         return inst
     }
 
-    onPickResource(unit: BaseUnit, other: p2.Body) {
-        if (this.world.resource.isRes(other, true)) {
-            unit.info.pickEnergy(50)
+    onDeath(unit: BaseUnit){
+        if(unit!=this.world.control.core){//todo for player death
+            this.children.delete(unit)
+            this.removeChild(unit.display)
+            this.world.physics.removeBody(unit.physic)
         }
+    }
+
+    update(){
+        this.children.forEach(it=>it.update())
     }
 }

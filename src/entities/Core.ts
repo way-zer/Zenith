@@ -1,12 +1,11 @@
-import {randomColor} from "../util";
-import {MoveControl} from "./comp/MoveControl";
-import {BaseInfo} from "./comp/BaseInfo";
-import {BaseUnit, UnitBody} from "./BaseUnit";
-import {TheWorld} from "../ui/TheWorld";
-import Graphics = egret.Graphics;
+import {randomColor} from '../util'
+import {BaseUnit} from './BaseUnit'
+import {TheWorld} from '../ui/TheWorld'
+import {UnitBody} from './comp/PhysicBody'
+import Graphics = egret.Graphics
 
 function drawPolygonPoints(graphics: Graphics, centerX: number, centerY: number, sides: number, radius: number, startAngle: number = Math.PI / 2) {
-    const points = [];
+    const points = []
     let angle = startAngle
     for (let i = 0; i < sides; i++) {
         points.push({x: centerX + radius * Math.cos(angle), y: centerY + radius * Math.sin(angle)})
@@ -18,42 +17,50 @@ function drawPolygonPoints(graphics: Graphics, centerX: number, centerY: number,
     }
 }
 
-export class Core extends egret.Shape implements BaseUnit {
-    body: UnitBody = new UnitBody(this)
-    move: MoveControl
-    info = new BaseInfo(this, 1000)
+export class Core extends BaseUnit<egret.Shape> {
+    maxEnergy = Infinity
+    attackDamage = 10
+    attackSpeed = 200
+    createObject(): egret.Shape {
+        return new egret.Shape()
+    }
+
     color = randomColor()
     scale: number = 1
 
-    constructor() {
-        super();
-        this.draw()
-        this.move = new MoveControl(this)
-        this.addEventListener(egret.Event.ENTER_FRAME, this.update, this)
+    updateBody() {
+        this.scale = 1 + this.energy / 50
+        this.radius = 15 * this.scale
+        super.updateBody()
     }
 
-    private draw() {
-        this.graphics.beginFill(0x0099FF)
-        this.graphics.lineStyle(1, 0x66FF99)
-        drawPolygonPoints(this.graphics, 0, 0, 8, 16 * this.scale)
-        this.graphics.endFill()
-        this.graphics.beginFill(this.color)
-        this.graphics.lineStyle(1, 1, 0x993300)
-        this.graphics.drawCircle(0, 0, 8 * this.scale)
+    updateMove() {
+        this.speed = 300 / Math.pow(this.energy + 1, 0.3)
+        super.updateMove()
     }
 
-    update() {
-        const delta = TheWorld.deltaTime
-        const newScale = this.info.energy / 1000
-        if (this.body.setRadius(15 * newScale)) {
-            this.scale = newScale
-            this.draw()
+    radiusChange() {
+        const graphics = this.display.graphics
+        graphics.beginFill(0x0099FF)
+        graphics.lineStyle(1, 0x66FF99)
+        drawPolygonPoints(graphics, 0, 0, 8, 16 * this.scale)
+        graphics.endFill()
+        graphics.beginFill(this.color)
+        graphics.lineStyle(1, 1, 0x993300)
+        graphics.drawCircle(0, 0, 8 * this.scale)
+    }
+
+    attackDelta = 0
+
+    updateAttack(): void {
+        this.attackDelta += TheWorld.deltaTime
+        if (this.attackDelta < this.attackSpeed) return
+        for (let it of this.physic.other){
+            if(it instanceof UnitBody){
+                it.unit.healthC.damage(this.attackDamage)
+                this.attackDelta = 0
+                return
+            }
         }
-        this.move.speed = 5000 / Math.pow(this.info.energy, 0.3)
-        this.move.update(delta)
-    }
-
-    onDeath() {
-
     }
 }

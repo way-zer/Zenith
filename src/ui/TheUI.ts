@@ -8,12 +8,16 @@ export class TheUI extends DisplayObjectContainer {
     startMenu: StartMenu
     gameHub: GameHub
 
-    constructor(private world: TheWorld) {
+    constructor(public world: TheWorld) {
         super()
         this.addChild(fgui.GRoot.inst.displayObject)
         UIPackage.addPackage('UI')
         this.startMenu = new StartMenu(this)
         this.gameHub = new GameHub(this)
+        this.addEventListener(egret.Event.ENTER_FRAME,this.update,this)
     }
 
+    update(){
+        this.gameHub.update()
+    }
 }

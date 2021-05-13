@@ -1,18 +1,22 @@
-export class RankListItem{
-    ref = fgui.UIPackage.createObject('UI', 'rankListItem').asCom
-    name = this.ref.getChild("name").asLabel
-    score = this.ref.getChild("score").asLabel
+import GComponent = fgui.GComponent
 
-    set(name: string, score: number) {
-        this.name.text = name
-        this.score.text = score.toString()
-    }
-}
+type Value = { name: string, score: number }
 
 export class RankList {
     constructor(private list: fgui.GList) {
-        const item = new RankListItem()
-        list.addChild(item.ref)
-        item.set('PlayerTest', 99999)
+        this.update([{name:'PlayerTest', score:99999}])
+    }
+
+    update(value: Value[]){
+        const newNum = Math.min(value.length,8)
+        while (newNum>this.list.numItems)this.list.addItemFromPool("ui://UI/rankListItem")
+        if(newNum<this.list.numItems)this.list.removeChildrenToPool(newNum)
+        function setItem(ref:GComponent,v:Value) {
+            ref.getChild('name').asLabel.text = v.name
+            ref.getChild('score').asLabel.text = v.score.toString()
+        }
+        for (let i = 0; i < newNum; i++) {
+            setItem(this.list.getChildAt(i).asCom,value[i])
+        }
     }
 }

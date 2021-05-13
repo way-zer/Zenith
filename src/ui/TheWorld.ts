@@ -1,11 +1,11 @@
-import DisplayObjectContainer = egret.DisplayObjectContainer;
-import Bitmap = egret.Bitmap;
-import BitmapFillMode = egret.BitmapFillMode;
-import {ResourceMgr} from "../game/ResourceMgr";
-import {EntityExtDraw} from "../game/EntityExtDraw";
-import {EntityMgr} from "../game/EntityMgr";
-import {ControlMgr} from "../game/ControlMgr";
-import {UnitBody} from "../entities/BaseUnit";
+import DisplayObjectContainer = egret.DisplayObjectContainer
+import Bitmap = egret.Bitmap
+import BitmapFillMode = egret.BitmapFillMode
+import {ResourceMgr} from '../game/ResourceMgr'
+import {EntityExtDraw} from '../game/EntityExtDraw'
+import {EntityMgr} from '../game/EntityMgr'
+import {ControlMgr} from '../game/ControlMgr'
+import {UnitBody} from '../entities/comp/PhysicBody'
 
 export class TheWorld extends DisplayObjectContainer {
     static deltaTime = 0
@@ -16,18 +16,14 @@ export class TheWorld extends DisplayObjectContainer {
     control: ControlMgr
 
     $onAddToStage(stage: egret.Stage, nestLevel: number) {
-        super.$onAddToStage(stage, nestLevel);
-        let lastTime = egret.getTimer()
-        this.addEventListener(egret.Event.ENTER_FRAME, () => {
-            TheWorld.deltaTime = egret.getTimer() - lastTime
-            lastTime = egret.getTimer()
-        }, this, undefined, 100000)
+        super.$onAddToStage(stage, nestLevel)
         this.setBg()
         this.setupWorld()
         this.resource = new ResourceMgr(this)
         this.entityExtDraw = new EntityExtDraw(this)
         this.entities = new EntityMgr(this)
         this.control = new ControlMgr(this)
+        this.addEventListener(egret.Event.ENTER_FRAME,this.update,this)
     }
 
     private setBg() {
@@ -45,20 +41,21 @@ export class TheWorld extends DisplayObjectContainer {
     }
 
     private setupWorld() {
+        this.physics.gravity = [0, 0]
         this.physics.sleepMode = p2.World.BODY_SLEEPING
-        this.addEventListener(egret.Event.ENTER_FRAME, () => {
-            this.physics.step(TheWorld.deltaTime / 1000);
-        }, this)
-        this.physics.on(UnitBody.Event_Impact, (e: { bodyA: p2.Body, bodyB: p2.Body }) => {
-            if (e.bodyA instanceof UnitBody)
-                e.bodyA.onImpact(e.bodyB)
-            else if (e.bodyB instanceof UnitBody)
-                e.bodyB.onImpact(e.bodyA)
-        })
+        UnitBody.init(this.physics)
+    }
+
+    lastTime = egret.getTimer()
+    update(){
+        TheWorld.deltaTime = egret.getTimer() - this.lastTime
+        this.lastTime = egret.getTimer()
+        this.physics.step(Math.min(TheWorld.deltaTime, 100) / 1000)
+        this.entities.update()
     }
 
     setCenter(x: number, y: number) {
-        this.anchorOffsetX = x;
-        this.anchorOffsetY = y;
+        this.anchorOffsetX = x
+        this.anchorOffsetY = y
     }
 }

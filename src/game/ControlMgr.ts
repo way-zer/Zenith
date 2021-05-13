@@ -37,7 +37,7 @@ export class ControlMgr {
 
         this.offset[0] += (right - left) * TheWorld.deltaTime * speed
         this.offset[1] += (down - up) * TheWorld.deltaTime * speed
-        this.world.setCenter((this.core?.x || 0) + this.offset[0], (this.core?.y || 0) + this.offset[1])
+        this.world.setCenter((this.core?.display?.x || 0) + this.offset[0], (this.core?.display?.y || 0) + this.offset[1])
     }
 
     onWheel(e: WheelEvent) {
