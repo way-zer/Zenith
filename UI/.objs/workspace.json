@@ -1,8 +1,14 @@
 {
   "libview.firstColumnWidth": 378,
   "libview.iconScale": 0,
-  "backgroundColor": 6710886,
-  "auxline1": true,
+  "doc.openedDocs": [
+    "ui://67fzhugfhhq51g",
+    "ui://67fzhugft5xr5",
+    "ui://67fzhugft5xr8",
+    "ui://67fzhugfq66rc",
+    "ui://67fzhugfhhq51l"
+  ],
+  "test.device": "720p Phone",
   "canvasColor": 10066329,
   "auxline2": true,
   "doc.activeDoc": "ui://67fzhugft5xr8",
@@ -11,19 +17,13 @@
     "67fzhugf",
     "/",
     "67fzhugf",
-    "/Hub/",
-    "67fzhugf",
-    "/Start/"
+    "/HUB/"
   ],
-  "doc.openedDocs": [
-    "ui://67fzhugfp941d",
-    "ui://67fzhugfp941e",
-    "ui://67fzhugfeiz60",
-    "ui://67fzhugfq66rc",
-    "ui://67fzhugft5xr8"
-  ],
+  "auxline1": true,
   "snapToGrid": true,
-  "gridColor": 80,
+  "test.orientation": "landscape",
+  "backgroundColor": 6710886,
   "libview.currentGroup": "",
-  "gridSize": 30
+  "gridSize": 30,
+  "gridColor": 80
 }

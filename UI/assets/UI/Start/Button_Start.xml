@@ -2,19 +2,20 @@
 <component size="360,120" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <graph id="n0_t5xr" name="n0" xy="0,0" size="360,120" touchable="false" type="rect" lineSize="0" fillColor="#fff0f0f0" corner="30">
+    <image id="n5_hhq5" name="n5" src="hhq5i" fileName="UI_main/PlayerPathContent_TEMP_8_515.tex.png" xy="-6,-10" size="371,141"/>
+    <graph id="n0_t5xr" name="n0" xy="-7,1" size="360,120" alpha="0" touchable="false" type="rect" lineSize="0" lineColor="#00000000" fillColor="#00f0f0f0" corner="30">
       <gearDisplay controller="button" pages="0"/>
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
-    <graph id="n1_t5xr" name="n1" xy="0,0" size="360,120" touchable="false" type="rect" lineSize="0" fillColor="#fffafafa">
+    <graph id="n1_t5xr" name="n1" xy="0,0" size="360,120" alpha="0" touchable="false" type="rect" lineSize="0" fillColor="#fffafafa">
       <gearDisplay controller="button" pages="2"/>
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
-    <graph id="n2_t5xr" name="n2" xy="0,0" size="360,120" touchable="false" type="rect" lineSize="0" fillColor="#ffcccccc">
+    <graph id="n2_t5xr" name="n2" xy="0,0" size="360,120" alpha="0" touchable="false" type="rect" lineSize="0" fillColor="#ffcccccc">
       <gearDisplay controller="button" pages="1,3"/>
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
-    <text id="n4_t5xr" name="title" xy="28,12" size="305,99" fontSize="75" align="center" vAlign="middle" autoSize="none" strokeColor="#0000ff" shadowColor="#666666" shadowOffset="5,2" text="START&#xA;">
+    <text id="n4_t5xr" name="title" xy="28,12" size="305,99" fontSize="75" color="#ffffff" align="center" vAlign="middle" autoSize="none" strokeColor="#0000ff" shadowColor="#666666" shadowOffset="5,2" text="START&#xA;">
       <gearDisplay controller="button" pages="0,2"/>
     </text>
   </displayList>

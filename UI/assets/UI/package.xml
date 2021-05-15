@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <packageDescription id="67fzhugf">
   <resources>
-    <component id="eiz60" name="StartMenu.xml" path="/Start/" exported="true"/>
     <component id="t5xr5" name="Button_Start.xml" path="/Start/"/>
-    <component id="t5xr8" name="GameHub.xml" path="/Hub/" exported="true"/>
-    <component id="q66rc" name="rankListItem.xml" path="/Hub/" exported="true"/>
-    <component id="p941d" name="Button_CreateIcon.xml" path="/Hub/"/>
+    <component id="t5xr8" name="GameHub.xml" path="/HUB/" exported="true"/>
+    <component id="q66rc" name="rankListItem.xml" path="/HUB/" exported="true"/>
     <component id="p941e" name="Circle.xml" path="/Chat/"/>
+    <image id="hhq5i" name="PlayerPathContent_TEMP_8_515.tex.png" path="/Start/assets/" scale="9grid" scale9grid="60,47,19,8"/>
+    <image id="hhq5l" name="UI_CRB_Basekit_1_0_1117.tex.png" path="/Start/assets/" scale9grid="70,42,22,15" qualityOption="source"/>
+    <image id="hhq5m" name="UI_CRB_Tooltip_516_26.tex.png" path="/HUB/assets/" scale="9grid" scale9grid="14,14,28,28"/>
+    <image id="hhq5n" name="UI_Datachron_0_0.tex.png" path="/HUB/assets/" scale9grid="85,46,53,39"/>
+    <image id="hhq5o" name="UI_CRB_UIKITWindows_143_0.tex.png" path="/HUB/assets/"/>
+    <image id="hhq5p" name="UI_CRB_UIKITWindows_316_570.tex.png" path="/HUB/assets/"/>
+    <image id="hhq5q" name="UI_CRB_Tooltip_0_26.tex.png" path="/HUB/assets/"/>
+    <image id="hhq5r" name="UI_CRB_Basekit_1_257_841.tex.png" path="/HUB/assets/"/>
+    <image id="hhq5s" name="UI_CRB_Basekit_1_236_285.tex.png" path="/HUB/assets/"/>
+    <image id="hhq5t" name="UI_CRB_Basekit_1_353_457.tex.png" path="/HUB/assets/" scale9grid="0,0,-26,-24"/>
+    <image id="hhq5u" name="crossed-swords.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <image id="hhq5v" name="ringed-planet.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <image id="hhq5x" name="sharp-shuriken.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <component id="hhq516" name="Button_CreateIcon(1).xml" path="/HUB/buttons/"/>
+    <image id="hhq518" name="candlebright.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <image id="hhq519" name="honeycomb.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <component id="hhq51b" name="Button_CreateIcon.xml" path="/HUB/buttons/"/>
+    <component id="hhq51c" name="Button_CreateIcon(2).xml" path="/HUB/buttons/"/>
+    <component id="hhq51d" name="Button_CreateIcon(3).xml" path="/HUB/buttons/"/>
+    <component id="hhq51g" name="StartMenu.xml" path="/Start/" exported="true"/>
+    <image id="hhq51i" name="hamburger-menu.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <image id="hhq51j" name="keyboard.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <image id="hhq51k" name="speaker-off.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
+    <component id="hhq51l" name="Button1.xml" path="/HUB/buttons/"/>
+    <component id="hhq51m" name="Button2.xml" path="/HUB/buttons/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

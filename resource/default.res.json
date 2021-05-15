@@ -2,7 +2,7 @@
   "groups": [
     {
       "name": "preload",
-      "keys": "bgGrid,UI"
+      "keys": "bgGrid,UI,UI_atlas0"
     }
   ],
   "resources": [
@@ -15,6 +15,11 @@
       "name": "UI",
       "type": "bin",
       "url": "assets/UI/UI.fui"
+    },
+    {
+      "name": "UI_atlas0",
+      "type": "image",
+      "url": "assets/UI/UI_atlas0.png"
     }
   ]
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="512,512" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n0_hhq5" name="n0" src="hhq51i" fileName="UI_Game/hamburger-menu.svg" xy="0,0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n1_hhq5" name="n1" src="hhq51i" fileName="UI_Game/hamburger-menu.svg" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2_hhq5" name="n2" src="hhq51i" fileName="UI_Game/hamburger-menu.svg" xy="0,0">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3_hhq5" name="n3" src="hhq51i" fileName="UI_Game/hamburger-menu.svg" xy="0,0">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+  </displayList>
+  <Button downEffect="dark" downEffectValue=".8"/>
+</component>

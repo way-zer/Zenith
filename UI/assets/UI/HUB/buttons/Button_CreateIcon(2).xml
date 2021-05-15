@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="50,50" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <graph id="n0_p941" name="n0" xy="0,-1" size="50,50" touchable="false" type="rect" lineSize="0" fillColor="#00f0f0f0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n1_p941" name="n1" xy="0,-1" size="50,50" touchable="false" type="rect" lineSize="0" fillColor="#00fafafa">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n2_p941" name="n2" xy="-13,-12" size="74,71" type="rect" lineSize="0">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n3_p941" name="n3" xy="-13,-13" size="74,73" aspect="true" alpha="0.475" type="rect" fillColor="#f9ffff33"/>
+    <text id="n4_p941" name="button_name" xy="-12,-14" size="17,19" fontSize="12" color="#ffffff" autoSize="none" text="E&#xA;"/>
+    <text id="n6_p941" name="n6" xy="34,47" size="28,14" fontSize="8" color="#ffffff" autoSize="none" text="12"/>
+    <image id="n14_hhq5" name="n14" src="hhq5u" fileName="UI_Game/crossed-swords.svg" xy="0,0" size="50,50" color="#ffff33"/>
+  </displayList>
+  <Button/>
+</component>
