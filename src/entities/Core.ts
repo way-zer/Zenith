@@ -1,7 +1,6 @@
-import {randomColor} from '../util'
 import {BaseUnit} from './BaseUnit'
-import {TheWorld} from '../ui/TheWorld'
 import {UnitBody} from './comp/PhysicBody'
+import {Interval} from '../utils/Time'
 import Graphics = egret.Graphics
 
 function drawPolygonPoints(graphics: Graphics, centerX: number, centerY: number, sides: number, radius: number, startAngle: number = Math.PI / 2) {
@@ -18,14 +17,15 @@ function drawPolygonPoints(graphics: Graphics, centerX: number, centerY: number,
 }
 
 export class Core extends BaseUnit<egret.Shape> {
+    readonly type: 'Core' = 'Core'
     maxEnergy = Infinity
     attackDamage = 10
     attackSpeed = 200
+
     createObject(): egret.Shape {
         return new egret.Shape()
     }
 
-    color = randomColor()
     scale: number = 1
 
     updateBody() {
@@ -41,26 +41,30 @@ export class Core extends BaseUnit<egret.Shape> {
 
     radiusChange() {
         const graphics = this.display.graphics
+        graphics.clear()
         graphics.beginFill(0x0099FF)
         graphics.lineStyle(1, 0x66FF99)
         drawPolygonPoints(graphics, 0, 0, 8, 16 * this.scale)
         graphics.endFill()
-        graphics.beginFill(this.color)
+        graphics.beginFill(this.player.color)
         graphics.lineStyle(1, 1, 0x993300)
         graphics.drawCircle(0, 0, 8 * this.scale)
     }
 
-    attackDelta = 0
+    attackInterval = new Interval()
 
     updateAttack(): void {
-        this.attackDelta += TheWorld.deltaTime
-        if (this.attackDelta < this.attackSpeed) return
-        for (let it of this.physic.other){
-            if(it instanceof UnitBody){
-                it.unit.healthC.damage(this.attackDamage)
-                this.attackDelta = 0
+        this.attackInterval.check(this.attackSpeed, false)
+        for (let it of this.physic.other) {
+            if (it instanceof UnitBody && it.unit.player != this.player) {
+                this.attackSync(it.unit)
+                this.attackInterval.reset()
                 return
             }
         }
+    }
+
+    attackF(other: BaseUnit) {
+        other.healthC.damage(this.attackDamage)
     }
 }

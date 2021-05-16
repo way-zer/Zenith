@@ -1,6 +1,7 @@
 import {RankList} from './RankList'
 import {TheUI} from '../TheUI'
 import GRoot = fgui.GRoot
+import ControlMgr from '../../game/ControlMgr'
 
 export class GameHub {
     ref = fgui.UIPackage.createObject('UI', 'GameHub').asCom
@@ -20,7 +21,7 @@ export class GameHub {
     }
 
     update() {
-        const score = this.ui.world.control.core?.energy || 0
+        const score = ControlMgr.core?.energy || 0
         this.score.text = score.toString()
         this.rankList.update([{name: 'Player', score: score}])
     }

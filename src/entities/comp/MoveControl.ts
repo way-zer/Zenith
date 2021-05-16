@@ -1,6 +1,6 @@
 import {BaseUnit} from '../BaseUnit'
 import {displayToP2, p2ToDisplay} from '../../util'
-import {EntityExtDraw} from '../../game/EntityExtDraw'
+import EntityExtDraw from '../../game/EntityExtDraw'
 import Point = egret.Point
 
 class Path {
@@ -30,7 +30,7 @@ export class MoveControl {
 
     drawPath() {
         const pos = this.pos
-        const graphics = EntityExtDraw.inst.graphics
+        const graphics = EntityExtDraw.graphics
         graphics.lineStyle(1, 0xff0000)
         graphics.moveTo(pos.x, pos.y)
         for (const next of this.paths) {
@@ -46,7 +46,6 @@ export class MoveControl {
 
     update(delta: number, recheck: boolean = false): void {
         const body = this.unit.physic
-        p2ToDisplay(body, this.unit.display)
         if (this.paths.length === 0) {
             body.velocity = body.velocity.map((it) => it * 0.2)
             return

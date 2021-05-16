@@ -1,29 +1,35 @@
 import DisplayObjectContainer = egret.DisplayObjectContainer
 import Bitmap = egret.Bitmap
 import BitmapFillMode = egret.BitmapFillMode
-import {ResourceMgr} from '../game/ResourceMgr'
-import {EntityExtDraw} from '../game/EntityExtDraw'
-import {EntityMgr} from '../game/EntityMgr'
-import {ControlMgr} from '../game/ControlMgr'
+import ResourceMgr from '../game/ResourceMgr'
+import EntityMgr from '../game/EntityMgr'
+import ControlMgr from '../game/ControlMgr'
 import {UnitBody} from '../entities/comp/PhysicBody'
+import EntityExtDraw from '../game/EntityExtDraw'
+import {Time} from '../utils/Time'
+import PlayerMgr from '../game/PlayerMgr'
 
 export class TheWorld extends DisplayObjectContainer {
-    static deltaTime = 0
+    lastTime = egret.getTimer()
     physics = new p2.World()
-    resource: ResourceMgr
-    entityExtDraw: EntityExtDraw
-    entities: EntityMgr
-    control: ControlMgr
 
-    $onAddToStage(stage: egret.Stage, nestLevel: number) {
-        super.$onAddToStage(stage, nestLevel)
+    constructor() {
+        super()
+        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.init, this)
+    }
+
+    init() {
         this.setBg()
         this.setupWorld()
-        this.resource = new ResourceMgr(this)
-        this.entityExtDraw = new EntityExtDraw(this)
-        this.entities = new EntityMgr(this)
-        this.control = new ControlMgr(this)
-        this.addEventListener(egret.Event.ENTER_FRAME,this.update,this)
+        PlayerMgr.init()
+        ResourceMgr.init(this, -2)
+        EntityExtDraw.init(this, -1)
+        EntityMgr.init(this, 0)
+        ControlMgr.init(this)
+        this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
+        (window as any).DEBUG = {
+            PlayerMgr, ResourceMgr, EntityMgr,
+        }
     }
 
     private setBg() {
@@ -41,17 +47,24 @@ export class TheWorld extends DisplayObjectContainer {
     }
 
     private setupWorld() {
-        this.physics.gravity = [0, 0]
         this.physics.sleepMode = p2.World.BODY_SLEEPING
+        this.physics.applyGravity = false
+        this.physics.applyDamping = false
+        this.physics.useFrictionGravityOnZeroGravity = false
+        this.physics.useWorldGravityAsFrictionGravity = true
+        this.physics.gravity = [0, 0]
         UnitBody.init(this.physics)
     }
 
-    lastTime = egret.getTimer()
-    update(){
-        TheWorld.deltaTime = egret.getTimer() - this.lastTime
+    update() {
+        Time.deltaTime = egret.getTimer() - this.lastTime
         this.lastTime = egret.getTimer()
-        this.physics.step(Math.min(TheWorld.deltaTime, 100) / 1000)
-        this.entities.update()
+        this.physics.step(Math.min(Time.deltaTime, 100) / 1000)
+        EntityExtDraw.preUpdate()
+
+        ControlMgr.update()
+        ResourceMgr.update()
+        EntityMgr.update()
     }
 
     setCenter(x: number, y: number) {

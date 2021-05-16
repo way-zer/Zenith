@@ -1,6 +1,5 @@
-import * as Phaser from "phaser";
-import {TheWorld} from "./ui/TheWorld";
-import DisplayObject = egret.DisplayObject;
+import * as Phaser from 'phaser'
+import {config} from './config'
 
 const colors = Phaser.Display.Color.HSVColorWheel(1, 1)
 
@@ -9,14 +8,16 @@ export function randomColor() {
     return colors[Phaser.Math.Between(0, 359)].color
 }
 
-export function setRandomPosition(world: TheWorld, obj: DisplayObject) {
-    obj.x = Math.random() * world.width
-    obj.y = Math.random() * world.height
+export function randomPosition(): { x: number, y: number } {
+    return {
+        x: Math.random() * config.world.width,
+        y: Math.random() * config.world.height,
+    }
 }
 
-export function clamp(v:number,min:number,max:number):number{
-    if(v<min)return min
-    if(v>max)return max
+export function clamp(v: number, min: number, max: number): number {
+    if (v < min) return min
+    if (v > max) return max
     return v
 }
 

@@ -1,7 +1,14 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite'
+
+const {resolve} = require('path')
 
 export default defineConfig({
-  server:{
-    port: 8082
-  }
-});
+    resolve: {
+        alias: [
+            {find: '@', replacement: resolve(__dirname, 'src')},
+        ],
+    },
+    server: {
+        port: 8082,
+    },
+})

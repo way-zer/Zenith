@@ -1,53 +1,62 @@
-import {Core} from "../entities/Core";
-import {TheWorld} from "../ui/TheWorld";
-import TouchEvent = egret.TouchEvent;
+import {Core} from '../entities/Core'
+import {TheWorld} from '../ui/TheWorld'
+import {config} from '../config'
+import {clamp} from '../util'
+import {Time} from '../utils/Time'
+import TouchEvent = egret.TouchEvent
 
-
-export class ControlMgr {
-    // control!: Phaser.Cameras.Controls.FixedKeyControl;
+class ControlMgr {
+    private world!: TheWorld
+    private downKey = new Map()
+    private offset = [0, 0]
     core?: Core
-    downKey = new Map()
 
-    constructor(public world: TheWorld) {
-        this.core = world.entities.addCore()
-        world.addEventListener(egret.Event.ENTER_FRAME, this.update, this, undefined, 100)
-        document.addEventListener("keydown", (e) => {
-            this.downKey.set(e.code, true)
-        })
-        document.addEventListener("keyup", (e) => {
-            this.downKey.delete(e.code)
-        })
-        document.addEventListener("wheel", this.onWheel.bind(this))
-        world.touchEnabled = true
-        world.addEventListener(TouchEvent.TOUCH_TAP, this.onTap, this)
-        // scene.input.on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        //     this.core?.move.moveTo(scene.input.activePointer.worldX, scene.input.activePointer.worldY)
-        // })
+
+    /**@return boolean any key is down*/
+    key(keys: string[]): boolean {
+        return keys.some(it => this.downKey.get(it))
     }
 
-    private offset = [0, 0]
+    init(world: TheWorld) {
+        this.world = world
+        world.addEventListener(egret.Event.ENTER_FRAME, this.update, this, undefined, 100)
+        document.addEventListener('keydown', (e) => {
+            this.downKey.set(e.code, true)
+        })
+        document.addEventListener('keyup', (e) => {
+            this.downKey.delete(e.code)
+        })
+        document.addEventListener('wheel', this.onWheel.bind(this))
+        world.touchEnabled = true
+        world.addEventListener(TouchEvent.TOUCH_TAP, this.onTap, this)
+    }
 
     update() {
-        const speed = 2
+        const left = this.key(['keyA', 'ArrowLeft']) ? 1 : 0
+        const right = this.key(['KeyD', 'ArrowRight']) ? 1 : 0
+        const down = this.key(['KeyS', 'ArrowDown']) ? 1 : 0
+        const up = this.key(['KeyW', 'ArrowUp']) ? 1 : 0
 
-        const left = this.downKey.get("KeyA") || this.downKey.get("ArrowLeft") || 0
-        const right = this.downKey.get("KeyD") || this.downKey.get("ArrowRight") || 0
-        const up = this.downKey.get("KeyW") || this.downKey.get("ArrowUp") || 0
-        const down = this.downKey.get("KeyS") || this.downKey.get("ArrowDown") || 0
-
-        this.offset[0] += (right - left) * TheWorld.deltaTime * speed
-        this.offset[1] += (down - up) * TheWorld.deltaTime * speed
+        this.offset[0] += (right - left) * Time.deltaTime * config.camera.speed
+        this.offset[1] += (down - up) * Time.deltaTime * config.camera.speed
         this.world.setCenter((this.core?.display?.x || 0) + this.offset[0], (this.core?.display?.y || 0) + this.offset[1])
     }
 
-    onWheel(e: WheelEvent) {
+    reset(){
+        this.core = undefined
+        this.offset = [0,0]
+    }
+
+    private onWheel(e: WheelEvent) {
+        const {minScale, maxScale} = config.camera
         const oldScale = this.world.scaleX
-        const delta = e.deltaY
-        const newScale = Math.min(5, Math.max(0.3, oldScale * (1 - delta / 500)))
+        const newScale = clamp(oldScale * (1 - e.deltaY / 500), minScale, maxScale)
         this.world.scaleX = this.world.scaleY = newScale
     }
 
-    onTap(e: egret.TouchEvent) {
-        this.core?.move.moveTo(e.localX, e.localY)
+    private onTap(e: egret.TouchEvent) {
+        this.core?.move?.moveTo(e.localX, e.localY)
     }
 }
+
+export default new ControlMgr()

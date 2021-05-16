@@ -1,5 +1,6 @@
 import {TheUI} from '../TheUI'
 import GRoot = fgui.GRoot
+import NetworkMgr from '../../game/NetworkMgr'
 
 export class StartMenu{
     ref = fgui.UIPackage.createObject("UI", "StartMenu").asCom
@@ -10,8 +11,8 @@ export class StartMenu{
         this.btn.addClickListener(this.onStart, this)
     }
 
-    onStart() {
-        // this.btn.enabled = false
+    async onStart() {
+        await NetworkMgr.connect()
         this.ref.visible = false
         this.ui.gameHub.ref.visible = true
         console.log("start")
