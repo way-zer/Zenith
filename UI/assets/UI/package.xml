@@ -15,11 +15,9 @@
     <image id="hhq5r" name="UI_CRB_Basekit_1_257_841.tex.png" path="/HUB/assets/"/>
     <image id="hhq5s" name="UI_CRB_Basekit_1_236_285.tex.png" path="/HUB/assets/"/>
     <image id="hhq5t" name="UI_CRB_Basekit_1_353_457.tex.png" path="/HUB/assets/" scale9grid="0,0,-26,-24"/>
-    <image id="hhq5u" name="crossed-swords.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <image id="hhq5v" name="ringed-planet.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <image id="hhq5x" name="sharp-shuriken.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <component id="hhq516" name="Button_CreateIcon(1).xml" path="/HUB/buttons/"/>
-    <image id="hhq518" name="candlebright.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <image id="hhq519" name="honeycomb.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <component id="hhq51b" name="Button_CreateIcon.xml" path="/HUB/buttons/"/>
     <component id="hhq51c" name="Button_CreateIcon(2).xml" path="/HUB/buttons/"/>
@@ -30,6 +28,12 @@
     <image id="hhq51k" name="speaker-off.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <component id="hhq51l" name="Button1.xml" path="/HUB/buttons/"/>
     <component id="hhq51m" name="Button2.xml" path="/HUB/buttons/"/>
+    <component id="q4bl1q" name="Button3.xml" path="/HUB/buttons/"/>
+    <image id="q4bl1t" name="archers-arrow.png" path="/HUB/buttons/assets/" exported="true"/>
+    <image id="jryg1w" name="heart.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
+    <image id="jryg1x" name="war-pick.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
+    <image id="jryg1y" name="crossed-swords.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
+    <image id="jryg1z" name="bow-arrow.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
   </resources>
   <publish name=""/>
 </packageDescription>

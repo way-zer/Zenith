@@ -17,7 +17,8 @@
     <graph id="n3_p941" name="n3" xy="-13,-13" size="74,73" aspect="true" alpha="0.475" type="rect" fillColor="#f9ccff66"/>
     <text id="n4_p941" name="button_name" xy="-12,-14" size="17,19" fontSize="12" color="#ffffff" autoSize="none" text="E&#xA;"/>
     <text id="n6_p941" name="n6" xy="34,47" size="28,14" fontSize="8" color="#ffffff" autoSize="none" text="12"/>
-    <image id="n13_hhq5" name="n13" src="hhq5x" fileName="UI_Game/sharp-shuriken.svg" xy="0,-1" size="50,50" color="#ccff99"/>
+    <graph id="n16_jryg" name="n16" xy="-1,-1" size="50,50" type="rect" fillColor="#ff66cc99"/>
+    <image id="n15_jryg" name="n15" src="jryg1z" fileName="HUB/buttons/assets/bow-arrow (2).svg" xy="-1,-1" size="50,50"/>
   </displayList>
   <Button/>
 </component>

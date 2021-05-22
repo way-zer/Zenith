@@ -17,7 +17,8 @@
     <graph id="n3_p941" name="n3" xy="-13,-13" size="74,73" aspect="true" alpha="0.475" type="rect" fillColor="#f9ffff33"/>
     <text id="n4_p941" name="button_name" xy="-12,-14" size="17,19" fontSize="12" color="#ffffff" autoSize="none" text="E&#xA;"/>
     <text id="n6_p941" name="n6" xy="34,47" size="28,14" fontSize="8" color="#ffffff" autoSize="none" text="12"/>
-    <image id="n14_hhq5" name="n14" src="hhq5u" fileName="UI_Game/crossed-swords.svg" xy="0,0" size="50,50" color="#ffff33"/>
+    <graph id="n16_jryg" name="n16" xy="0,0" size="50,50" type="rect" fillColor="#ffffff33"/>
+    <image id="n14_hhq5" name="n14" src="jryg1y" fileName="HUB/buttons/assets/crossed-swords.svg" xy="0,0" size="50,50" color="#ffff33"/>
   </displayList>
   <Button/>
 </component>

@@ -5,6 +5,10 @@
     "ui://67fzhugfhhq51g",
     "ui://67fzhugft5xr5",
     "ui://67fzhugft5xr8",
+    "ui://67fzhugfhhq51c",
+    "ui://67fzhugfhhq51d",
+    "ui://67fzhugfhhq516",
+    "ui://67fzhugfhhq51b",
     "ui://67fzhugfq66rc",
     "ui://67fzhugfhhq51l"
   ],
@@ -17,7 +21,13 @@
     "67fzhugf",
     "/",
     "67fzhugf",
-    "/HUB/"
+    "/HUB/",
+    "67fzhugf",
+    "/HUB/assets/",
+    "67fzhugf",
+    "/HUB/buttons/",
+    "67fzhugf",
+    "/HUB/buttons/assets/"
   ],
   "auxline1": true,
   "snapToGrid": true,

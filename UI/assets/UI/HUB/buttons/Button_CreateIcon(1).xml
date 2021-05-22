@@ -14,10 +14,11 @@
       <gearDisplay controller="button" pages="1,3"/>
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
-    <graph id="n3_p941" name="n3" xy="-13,-13" size="74,73" aspect="true" alpha="0.475" type="rect" fillColor="#f9ff3399"/>
+    <graph id="n3_p941" name="n3" xy="-13,-13" size="74,73" aspect="true" alpha="0.475" type="rect" fillColor="#f9cc3300"/>
     <text id="n4_p941" name="button_name" xy="-12,-14" size="17,19" fontSize="12" color="#ffffff" autoSize="none" text="E&#xA;"/>
     <text id="n6_p941" name="n6" xy="34,47" size="28,14" fontSize="8" color="#ffffff" autoSize="none" text="12"/>
-    <image id="n14_hhq5" name="n14" src="hhq518" fileName="UI_Game/candlebright.svg" xy="0,-1" size="50,50" color="#ff0099"/>
+    <graph id="n17_jryg" name="n17" xy="0,0" size="50,50" type="rect" fillColor="#ffcc0000"/>
+    <image id="n16_jryg" name="n16" src="jryg1w" fileName="HUB/buttons/assets/heart.svg" xy="0,0" size="50,50" color="#ff0000"/>
   </displayList>
   <Button/>
 </component>

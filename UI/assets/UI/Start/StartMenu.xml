@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1280,720" overflow="hidden" initName="BackGround" designImageAlpha="30" bgColor="#3333ff">
-  <controller name="gameOver" pages="0,false,1,true" selected="1"/>
+  <controller name="gameOver" pages="0,false,1,true" selected="0"/>
   <displayList>
-    <image id="n38_hhq5" name="n38" src="hhq5n" fileName="HUB/assets/UI_Datachron_0_0.tex.png" xy="0,0" size="1280,720" visible="false" alpha="0.6"/>
+    <image id="n38_hhq5" name="n38" src="hhq5n" fileName="HUB/assets/UI_Datachron_0_0.tex.png" xy="0,0" size="1280,720" alpha="0.6"/>
     <image id="n35_hhq5" name="n35" src="hhq5l" fileName="Start/assets/UI_CRB_Basekit_1_0_1117.tex.png" xy="264,-33" size="762,471" group="n43_jdif" color="#a9d4ff"/>
     <text id="n39_jdif" name="标题_Zenith" xy="553,63" size="174,79" group="n43_jdif" font="CommercialScript" fontSize="60" color="#ffffff" autoSize="none" text="Zenith"/>
     <text id="n40_jdif" name="标题_增" xy="394,62" size="204,254" group="n42_jdif" font="STXinwei" fontSize="200" color="#ffffff" text="增">
@@ -16,7 +16,7 @@
       <Button titleColor="#000000" titleFontSize="75"/>
     </component>
     <text id="n44_jdif" name="n44" xy="590,376" size="100,34" group="n46_jdif" fontSize="24" color="#ffffff" align="center" vAlign="middle" text="最终得分"/>
-    <text id="n45_jdif" name="score" xy="570,407" size="139,64" group="n46_jdif" fontSize="48" text="10000"/>
+    <text id="n45_jdif" name="score" xy="570,407" size="140,64" group="n46_jdif" fontSize="48" text="10000"/>
     <group id="n46_jdif" name="_" xy="570,376" size="139,95" advanced="true">
       <gearDisplay controller="gameOver" pages="1"/>
     </group>
