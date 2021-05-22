@@ -5,7 +5,7 @@ const colors = Phaser.Display.Color.HSVColorWheel(1, 1)
 
 export function randomColor() {
     // @ts-ignore
-    return colors[Phaser.Math.Between(0, 359)].color
+    return colors[Phaser.Math.Between(0, 29)*12].color
 }
 
 export function randomPosition(): { x: number, y: number } {

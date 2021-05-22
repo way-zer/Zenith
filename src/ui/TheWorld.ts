@@ -1,35 +1,21 @@
 import DisplayObjectContainer = egret.DisplayObjectContainer
 import Bitmap = egret.Bitmap
 import BitmapFillMode = egret.BitmapFillMode
-import ResourceMgr from '../game/ResourceMgr'
-import EntityMgr from '../game/EntityMgr'
-import ControlMgr from '../game/ControlMgr'
 import {UnitBody} from '../entities/comp/PhysicBody'
-import EntityExtDraw from '../game/EntityExtDraw'
 import {Time} from '../utils/Time'
-import PlayerMgr from '../game/PlayerMgr'
 
-export class TheWorld extends DisplayObjectContainer {
-    lastTime = egret.getTimer()
+class TheWorld extends DisplayObjectContainer {
     physics = new p2.World()
 
     constructor() {
-        super()
-        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.init, this)
+        super();
+        this.sortableChildren = true
+        this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this)
     }
 
-    init() {
+    private onAddToStage() {
         this.setBg()
         this.setupWorld()
-        PlayerMgr.init()
-        ResourceMgr.init(this, -2)
-        EntityExtDraw.init(this, -1)
-        EntityMgr.init(this, 0)
-        ControlMgr.init(this)
-        this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
-        (window as any).DEBUG = {
-            PlayerMgr, ResourceMgr, EntityMgr,
-        }
     }
 
     private setBg() {
@@ -42,7 +28,7 @@ export class TheWorld extends DisplayObjectContainer {
         bg.fillMode = BitmapFillMode.REPEAT
         bg.width = this.width
         bg.height = this.height
-        bg.zIndex = -3
+        bg.zIndex = -99
         this.addChild(bg)
     }
 
@@ -56,16 +42,8 @@ export class TheWorld extends DisplayObjectContainer {
         UnitBody.init(this.physics)
     }
 
-    update() {
-        Time.deltaTime = egret.getTimer() - this.lastTime
-        this.lastTime = egret.getTimer()
-        EntityExtDraw.preUpdate()
-
+    updatePhysics() {
         this.physics.step(Math.min(Time.deltaTime, 100) / 1000)
-        ControlMgr.update()
-        ResourceMgr.update()
-        EntityMgr.update()
-        PlayerMgr.update()
     }
 
     setCenter(x: number, y: number) {
@@ -73,3 +51,5 @@ export class TheWorld extends DisplayObjectContainer {
         this.anchorOffsetY = y
     }
 }
+
+export default new TheWorld()

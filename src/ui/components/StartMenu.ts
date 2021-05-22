@@ -1,20 +1,21 @@
-import {TheUI} from '../TheUI'
 import GRoot = fgui.GRoot
-import NetworkMgr from '../../game/NetworkMgr'
+import TheUI from '../TheUI'
+import PlayerMgr from '../../game/PlayerMgr'
 
-export class StartMenu{
-    ref = fgui.UIPackage.createObject("UI", "StartMenu").asCom
-    btn = this.ref.getChild("btn").asButton
+export class StartMenu {
+    ref = fgui.UIPackage.createObject('UI', 'StartMenu').asCom
+    btn = this.ref.getChild('btn').asButton
+    score = this.ref.getChild("score").asLabel
+    controller = this.ref.getController("gameOver")
 
-    constructor(private ui: TheUI) {
+    constructor() {
         GRoot.inst.addChild(this.ref)
-        this.btn.addClickListener(this.onStart, this)
+        this.btn.addClickListener(TheUI.startGame, TheUI)
     }
 
-    async onStart() {
-        await NetworkMgr.connect()
-        this.ref.visible = false
-        this.ui.gameHub.ref.visible = true
-        console.log("start")
+    showGameOver() {
+        this.score.text = PlayerMgr.local.allEnergy.toString()
+        this.controller.setSelectedPage("true")
+        this.ref.visible = true
     }
 }

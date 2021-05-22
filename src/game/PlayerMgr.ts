@@ -51,6 +51,7 @@ class PlayerMgr {
     all = new Set<PlayerInfo>()
 
     init() {
+        this.reset()
         NetworkMgr.on(NetworkMgr.event_joined, ({sender}) => {
             sender.myInfo = this.local
             NetworkMgr.send(PlayerMgr.event_info, this.local.asSync(), true)

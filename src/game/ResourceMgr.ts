@@ -1,5 +1,5 @@
 import {displayToP2, randomColor} from '../util'
-import {TheWorld} from '../ui/TheWorld'
+import TheWorld from '../ui/TheWorld'
 import {EventKey} from '../utils/Event'
 import NetworkMgr from './NetworkMgr'
 import {config} from '../config'
@@ -37,16 +37,14 @@ class ResourceMgr extends DisplayObjectContainer {
     static event_list = new EventKey<{ list: ResInfo[] }>('res_generate')
     static event_destroy = new EventKey<DestroyInfo>('res_destroy')
     static lastGenerate = 0
-    world!: TheWorld
 
-    init(world: TheWorld, layer: number) {
-        this.world = world
+    init(layer: number) {
         this.zIndex = layer
-        world.addChild(this)
+        TheWorld.addChild(this)
         NetworkMgr.on(ResourceMgr.event_generate, this.generateF.bind(this))
         NetworkMgr.on(ResourceMgr.event_destroy, this.destroyF.bind(this))
         NetworkMgr.on(NetworkMgr.event_newPlayer, this.list.bind(this))
-        NetworkMgr.on(ResourceMgr.event_list, ({list})=>{
+        NetworkMgr.on(ResourceMgr.event_list, ({list}) => {
             list.forEach(this.generateF.bind(this))
         })
     }
@@ -64,7 +62,7 @@ class ResourceMgr extends DisplayObjectContainer {
     generateF(info: ResInfo) {
         if (!NetworkMgr.isMaster) ResourceMgr.lastGenerate = info.id
         const inst = new Res(info)
-        this.world.physics.addBody(inst.physics)
+        TheWorld.physics.addBody(inst.physics)
         this.addChild(inst)
     }
 
@@ -92,7 +90,7 @@ class ResourceMgr extends DisplayObjectContainer {
     destroyF(info: DestroyInfo) {
         const inst = this.getChildByName(info.name)
         if (inst) {
-            this.world.physics.removeBody((inst as Res).physics)
+            TheWorld.physics.removeBody((inst as Res).physics)
             this.removeChild(inst)
         }
     }

@@ -1,5 +1,4 @@
 import {RankList} from './RankList'
-import {TheUI} from '../TheUI'
 import PlayerMgr from '../../game/PlayerMgr'
 import GRoot = fgui.GRoot
 
@@ -10,7 +9,7 @@ export class GameHub {
     // miniMap = this.ref.getChild('miniMap').asLoader
     // createBtn = this.ref.getChild('createUnit').asButton
 
-    constructor(private ui: TheUI) {
+    constructor() {
         this.ref.visible = false
         GRoot.inst.addChild(this.ref)
         // this.createBtn.addClickListener(this.createUnit, this)

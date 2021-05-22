@@ -1,12 +1,12 @@
 import {Core} from '../entities/Core'
 import {BaseUnit, BaseUnitSync} from '../entities/BaseUnit'
-import {TheWorld} from '../ui/TheWorld'
+import TheWorld from '../ui/TheWorld'
 import {randomPosition} from '../util'
 import ControlMgr from './ControlMgr'
 import {EventKey} from '../utils/Event'
 import NetworkMgr from './NetworkMgr'
 import {Player} from '@leancloud/play'
-import PlayerMgr from './PlayerMgr'
+import TheUI from '../ui/TheUI'
 
 export const unitMap = {
     Core,
@@ -19,7 +19,7 @@ class EntityMgr extends egret.DisplayObjectContainer {
     static event_death = new EventKey<{ id: string }>('death')
     private static lastId = 0
     children = new Set<BaseUnit>()
-    world!: TheWorld
+    core?: Core
 
     get nextId() {
         return NetworkMgr.client.userId + '_' + (EntityMgr.lastId++)
@@ -41,11 +41,11 @@ class EntityMgr extends egret.DisplayObjectContainer {
     addUnitF(info: BaseUnitSync & { sender: Player }) {
         const unit = new unitMap[info.type](info.sender.myInfo)
         unit.fromSync(info)
-        this.world.physics.addBody(unit.physic)
+        TheWorld.physics.addBody(unit.physic)
         this.children.add(unit)
         this.addChild(unit.display)
         if (unit.player.local && unit.type == 'Core') {
-            ControlMgr.core = unit
+            this.core = unit
         }
     }
 
@@ -55,19 +55,18 @@ class EntityMgr extends egret.DisplayObjectContainer {
 
     onDeathF(info: { id: string, sender: Player }) {
         const unit = this.getUnitById(info.id)
-        if (unit == null) return
-        if (unit == ControlMgr.core) {//todo for player death
-
+        if (!unit) return
+        if (unit == this.core) {
+            return TheUI.gameOver().then()
         }
         this.children.delete(unit)
         this.removeChild(unit.display)
-        this.world.physics.removeBody(unit.physic)
+        TheWorld.physics.removeBody(unit.physic)
     }
 
-    init(world: TheWorld, layer: number) {
-        this.world = world
+    init(layer: number) {
         this.zIndex = layer
-        world.addChild(this)
+        TheWorld.addChild(this)
         NetworkMgr.on(EntityMgr.event_addUnit, this.addUnitF.bind(this))
         NetworkMgr.on(NetworkMgr.event_newPlayer, ({sender}) => {
             const list = [] as BaseUnitSync[]
@@ -99,9 +98,10 @@ class EntityMgr extends egret.DisplayObjectContainer {
     }
 
     reset() {
+        this.core = undefined
         this.children.clear()
         this.$children.length = 0
-        this.world.physics.clear()
+        TheWorld.physics.clear()
     }
 }
 
