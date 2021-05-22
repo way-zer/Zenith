@@ -1,10 +1,9 @@
 import {Player as NetPlayer} from '@leancloud/play'
-import EntityMgr from './EntityMgr'
-import ControlMgr from './ControlMgr'
-import ResourceMgr from './ResourceMgr'
 import {randomColor} from '../util'
 import NetworkMgr from './NetworkMgr'
 import {EventKey} from '../utils/Event'
+import EntityMgr, {UnitType} from './EntityMgr'
+import tr = egret.sys.tr
 
 declare module '@leancloud/play' {
     interface Player {
@@ -12,26 +11,27 @@ declare module '@leancloud/play' {
     }
 }
 
+type UnitMap = {
+    [key in UnitType]: number
+}
+
 type PlayerInfoSync = {
     name: string,
     color: number,
     allEnergy: number,
-    units: {
-        [key: string]: number
-    }
+    units: UnitMap
 }
 
 export class PlayerInfo implements PlayerInfoSync {
     name = 'Player#' + Math.floor(Math.random() * 99999)
     color = randomColor()
     allEnergy = 0
-    units = {}
-    netPlayer?: NetPlayer
+    units = {} as UnitMap
+    local = false
 
     reset() {
         this.allEnergy = 0
-        this.units = {}
-        this.netPlayer = undefined
+        this.units = {} as UnitMap
     }
 
     asSync(): PlayerInfoSync {
@@ -48,12 +48,11 @@ export class PlayerInfo implements PlayerInfoSync {
 class PlayerMgr {
     static event_info = new EventKey<PlayerInfoSync>('player_info')
     local = new PlayerInfo()
-    other = new Set<PlayerInfo>()
+    all = new Set<PlayerInfo>()
 
     init() {
         NetworkMgr.on(NetworkMgr.event_joined, ({sender}) => {
             sender.myInfo = this.local
-            this.local.netPlayer = sender
             NetworkMgr.send(PlayerMgr.event_info, this.local.asSync(), true)
         })
         NetworkMgr.on(NetworkMgr.event_newPlayer, ({sender}) => {
@@ -65,15 +64,25 @@ class PlayerMgr {
             //     this.local.units = body.units
             // } else {
             const v = PlayerInfo.fromSync(body)
-            v.netPlayer = sender
             sender.myInfo = v
-            this.other.add(v)
+            this.all.add(v)
             // }
         })
     }
 
+    update(){
+        this.all.forEach(it=>it.reset())
+        EntityMgr.children.forEach(it=>{
+            it.player.allEnergy += it.baseEnergy+it.energy
+            it.player.units[it.type]++
+        })
+    }
+
     reset() {
-        this.other.clear()
+        this.local.reset()
+        this.local.local = true
+        this.all.clear()
+        this.all.add(this.local)
     }
 }
 

@@ -11,6 +11,7 @@ import PlayerMgr from './PlayerMgr'
 export const unitMap = {
     Core,
 }
+export type UnitType = keyof typeof unitMap
 
 class EntityMgr extends egret.DisplayObjectContainer {
     static event_addUnit = new EventKey<BaseUnitSync>('addUnit')
@@ -43,7 +44,7 @@ class EntityMgr extends egret.DisplayObjectContainer {
         this.world.physics.addBody(unit.physic)
         this.children.add(unit)
         this.addChild(unit.display)
-        if (unit.player == PlayerMgr.local && unit.type == 'Core') {
+        if (unit.player.local && unit.type == 'Core') {
             ControlMgr.core = unit
         }
     }
@@ -71,7 +72,7 @@ class EntityMgr extends egret.DisplayObjectContainer {
         NetworkMgr.on(NetworkMgr.event_newPlayer, ({sender}) => {
             const list = [] as BaseUnitSync[]
             this.children.forEach(it => {
-                if (it.player == PlayerMgr.local)
+                if (it.player.local)
                     list.push(it.asSync())
             })
             NetworkMgr.sendPeer(EntityMgr.event_listUnit, {list}, sender)

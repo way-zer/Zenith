@@ -59,12 +59,13 @@ export class TheWorld extends DisplayObjectContainer {
     update() {
         Time.deltaTime = egret.getTimer() - this.lastTime
         this.lastTime = egret.getTimer()
-        this.physics.step(Math.min(Time.deltaTime, 100) / 1000)
         EntityExtDraw.preUpdate()
 
+        this.physics.step(Math.min(Time.deltaTime, 100) / 1000)
         ControlMgr.update()
         ResourceMgr.update()
         EntityMgr.update()
+        PlayerMgr.update()
     }
 
     setCenter(x: number, y: number) {

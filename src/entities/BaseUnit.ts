@@ -4,7 +4,7 @@ import {UnitBody} from './comp/PhysicBody'
 import {HealthControl} from './comp/HealthControl'
 import {UnitInfo} from './comp/UnitInfo'
 import ResourceMgr from '../game/ResourceMgr'
-import EntityMgr, {unitMap} from '../game/EntityMgr'
+import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
 import {Time} from '../utils/Time'
 import {displayToP2, p2ToDisplay} from '../util'
 import PlayerMgr, {PlayerInfo} from '../game/PlayerMgr'
@@ -13,7 +13,7 @@ import NetworkMgr from '../game/NetworkMgr'
 
 type UnitSyncId = { id: string }
 export type BaseUnitSync = UnitSyncId & {
-    type: keyof typeof unitMap,
+    type: UnitType,
     x: number,
     y: number,
     health?: number,
@@ -33,7 +33,7 @@ export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
     static event_move = new EventKey<UnitMoveSync>('unitMove')
     static event_collect = new EventKey<UnitSyncId>('unitCollect')
     readonly display: T
-    abstract readonly type: keyof typeof unitMap
+    abstract readonly type: UnitType
     physic: UnitBody = new UnitBody(this)
     /** null for other player*/
     move: MoveControl | null = null
@@ -122,7 +122,7 @@ export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
     //End Attack
 
     constructor(public readonly player: PlayerInfo) {
-        if (player == PlayerMgr.local)
+        if (player.local)
             this.move = new MoveControl(this)
         this.display = this.createObject()
         this.display.addEventListener(egret.Event.ADDED_TO_STAGE, this.init, this)
