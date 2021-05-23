@@ -1,30 +1,21 @@
 import {BaseUnit} from './BaseUnit'
 import {UnitBody} from './comp/PhysicBody'
 import {Interval} from '../utils/Time'
-import Graphics = egret.Graphics
+import {drawPolygonPoints} from '../utils/display'
+import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
+import NetworkMgr from '../game/NetworkMgr'
+import {EventKey} from '../utils/Event'
+import {Player} from '@leancloud/play'
 
-function drawPolygonPoints(graphics: Graphics, centerX: number, centerY: number, sides: number, radius: number, startAngle: number = Math.PI / 2) {
-    const points = []
-    let angle = startAngle
-    for (let i = 0; i < sides; i++) {
-        points.push({x: centerX + radius * Math.cos(angle), y: centerY + radius * Math.sin(angle)})
-        angle += 2 * Math.PI / sides
-    }
-    graphics.moveTo(points[0].x, points[0].y)
-    for (let i = sides - 1; i >= 0; i--) {
-        graphics.lineTo(points[i].x, points[i].y)
-    }
+type CreateUnitSync = {
+    id: string, targetId: string, type: UnitType
 }
 
-export class Core extends BaseUnit<egret.Shape> {
+export class Core extends BaseUnit {
     readonly type: 'Core' = 'Core'
     maxEnergy = Infinity
     attackDamage = 10
     attackSpeed = 200
-
-    createObject(): egret.Shape {
-        return new egret.Shape()
-    }
 
     scale: number = 1
 
@@ -66,5 +57,32 @@ export class Core extends BaseUnit<egret.Shape> {
 
     attackF(other: BaseUnit) {
         other.healthC.damage(this.attackDamage)
+    }
+
+    //skill
+    static event_skill = new EventKey<CreateUnitSync>('core_createUnit')
+
+    createUnit(type: UnitType) {
+        const price = unitMap[type].prototype.baseEnergy
+        if (price > this.energy) return
+        NetworkMgr.send(Core.event_skill, {id: this.id, targetId: EntityMgr.nextId, type: type})
+    }
+
+    createUnitF(sync: CreateUnitSync & { sender: Player }) {
+        const price = unitMap[sync.type].prototype.baseEnergy
+        if (price > this.energy) return
+        this.energy -= price
+        EntityMgr.addUnitF({
+            id: sync.targetId, type: sync.type, sender: sync.sender,
+            x: this.display.x, y: this.display.y,
+        })
+    }
+
+    static registerNetwork() {
+        NetworkMgr.on(Core.event_skill, (sync) => {
+            const t = EntityMgr.getUnitById(sync.id)
+            if (t && t instanceof Core)
+                t.createUnitF(sync)
+        })
     }
 }

@@ -1,8 +1,8 @@
 import TheWorld from '../ui/TheWorld'
 import {config} from '../config'
-import {clamp} from '../util'
 import {Time} from '../utils/Time'
 import EntityMgr from './EntityMgr'
+import {clamp} from '../utils/other'
 import TouchEvent = egret.TouchEvent
 
 class ControlMgr {
@@ -53,6 +53,7 @@ class ControlMgr {
 
     private static onTap(e: egret.TouchEvent) {
         EntityMgr.core?.move?.moveTo(e.localX, e.localY)
+        //TODO 增加集体指挥
     }
 }
 

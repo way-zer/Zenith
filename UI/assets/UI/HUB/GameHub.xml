@@ -6,19 +6,26 @@
     <list id="n16_10a9g" name="list" xy="1087,47" size="177,289" group="n21_p941" selectionMode="none" overflow="scroll" defaultItem="ui://67fzhugfq66rc" autoClearItems="true">
       <item title="test01" name="1"/>
       <item title="2"/>
-      <item title="3"/>
-      <item/>
-      <item/>
-      <item/>
+        <item title="3"/>
+        <item/>
+        <item/>
+        <item/>
     </list>
-    <group id="n21_p941" name="_ranklist" xy="1041,24" size="241,323"/>
-    <image id="n43_hhq5" name="n43" src="hhq5t" fileName="HUB/assets/UI_CRB_Basekit_1_353_457.tex.png" xy="1015,604" size="271,111" group="n24_p941"/>
-    <text id="n23_p941" name="_title" xy="1046,615" size="127,19" group="n24_p941" fontSize="12" autoSize="none" text="资源"/>
-    <text id="n25_p941" name="_number" xy="1189,616" size="68,19" group="n24_p941" fontSize="12" autoSize="none" text="000&#xA;"/>
-    <group id="n24_p941" name="_info" xy="1015,604" size="271,111" visible="false" advanced="true"/>
-    <component id="n60_hhq5" name="n60" src="hhq51b" fileName="HUB/buttons/Button_CreateIcon.xml" xy="297,646"/>
-    <component id="n56_hhq5" name="n56" src="hhq516" fileName="HUB/buttons/Button_CreateIcon(1).xml" xy="369,646"/>
-    <component id="n61_hhq5" name="n61" src="hhq51c" fileName="HUB/buttons/Button_CreateIcon(2).xml" xy="225,645"/>
-    <component id="n62_hhq5" name="n62" src="hhq51d" fileName="HUB/buttons/Button_CreateIcon(3).xml" xy="151,645"/>
+      <group id="n21_p941" name="_ranklist" xy="1041,24" size="241,323"/>
+      <image id="n43_hhq5" name="n43" src="hhq5t" fileName="HUB/assets/UI_CRB_Basekit_1_353_457.tex.png" xy="1015,604"
+             size="271,111" group="n24_p941"/>
+      <text id="n23_p941" name="_title" xy="1046,615" size="127,19" group="n24_p941" fontSize="12" autoSize="none"
+            text="资源"/>
+      <text id="n25_p941" name="_number" xy="1189,616" size="68,19" group="n24_p941" fontSize="12" autoSize="none"
+            text="000&#xA;"/>
+      <group id="n24_p941" name="_info" xy="1015,604" size="271,111" visible="false" advanced="true"/>
+      <component id="n62_hhq5" name="createBtn0" src="hhq51d" fileName="HUB/buttons/Button_CreateIcon(3).xml"
+                 xy="151,645"/>
+      <component id="n61_hhq5" name="createBtn1" src="hhq51c" fileName="HUB/buttons/Button_CreateIcon(2).xml"
+                 xy="225,645"/>
+      <component id="n60_hhq5" name="createBtn2" src="hhq51b" fileName="HUB/buttons/Button_CreateIcon.xml"
+                 xy="297,646"/>
+      <component id="n56_hhq5" name="createBtn3" src="hhq516" fileName="HUB/buttons/Button_CreateIcon(1).xml"
+                 xy="369,646"/>
   </displayList>
 </component>

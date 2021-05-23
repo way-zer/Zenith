@@ -1,10 +1,11 @@
-import {displayToP2, randomColor} from '../util'
 import TheWorld from '../ui/TheWorld'
 import {EventKey} from '../utils/Event'
 import NetworkMgr from './NetworkMgr'
 import {config} from '../config'
 import {Interval} from '../utils/Time'
 import {Player} from '@leancloud/play'
+import {randomColor} from '../utils/display'
+import {displayToP2} from '../utils/physics'
 import DisplayObjectContainer = egret.DisplayObjectContainer
 import Shape = egret.Shape
 

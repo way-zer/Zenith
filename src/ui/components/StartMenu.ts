@@ -5,8 +5,8 @@ import PlayerMgr from '../../game/PlayerMgr'
 export class StartMenu {
     ref = fgui.UIPackage.createObject('UI', 'StartMenu').asCom
     btn = this.ref.getChild('btn').asButton
-    score = this.ref.getChild("score").asLabel
-    controller = this.ref.getController("gameOver")
+    score = this.ref.getChild('score').asLabel
+    controller = this.ref.getController('gameOver')
 
     constructor() {
         GRoot.inst.addChild(this.ref)
@@ -15,7 +15,7 @@ export class StartMenu {
 
     showGameOver() {
         this.score.text = PlayerMgr.local.allEnergy.toString()
-        this.controller.setSelectedPage("true")
+        this.controller.setSelectedPage('true')
         this.ref.visible = true
     }
 }

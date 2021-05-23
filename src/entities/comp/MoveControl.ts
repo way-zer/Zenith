@@ -1,6 +1,6 @@
 import {BaseUnit} from '../BaseUnit'
-import {displayToP2, p2ToDisplay} from '../../util'
 import EntityExtDraw from '../../ui/EntityExtDraw'
+import {displayToP2, p2ToDisplay} from '../../utils/physics'
 import Point = egret.Point
 
 class Path {

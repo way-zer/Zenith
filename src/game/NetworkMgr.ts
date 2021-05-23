@@ -2,7 +2,6 @@ import {Client, Event, Player, ReceiverGroup} from '@leancloud/play'
 import {config} from '../config'
 import {EventKey, MyEventEmitter} from '../utils/Event'
 import EntityMgr from './EntityMgr'
-import ControlMgr from './ControlMgr'
 import {Main} from '../Main'
 
 /**@implements MyEventEmitter broadcast event in room*/

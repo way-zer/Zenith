@@ -1,15 +1,14 @@
-import DisplayObject = egret.DisplayObject
 import {MoveControl} from './comp/MoveControl'
 import {UnitBody} from './comp/PhysicBody'
 import {HealthControl} from './comp/HealthControl'
 import {UnitInfo} from './comp/UnitInfo'
 import ResourceMgr from '../game/ResourceMgr'
-import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
 import {Time} from '../utils/Time'
-import {displayToP2, p2ToDisplay} from '../util'
-import PlayerMgr, {PlayerInfo} from '../game/PlayerMgr'
+import {PlayerInfo} from '../game/PlayerMgr'
 import {EventKey} from '../utils/Event'
 import NetworkMgr from '../game/NetworkMgr'
+import {displayToP2, p2ToDisplay} from '../utils/physics'
+import EntityMgr, {UnitType} from '../game/EntityMgr'
 
 type UnitSyncId = { id: string }
 export type BaseUnitSync = UnitSyncId & {
@@ -28,12 +27,12 @@ export type UnitMoveSync = UnitSyncId & {
     velocity: number[]
 }
 
-export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
+export abstract class BaseUnit {
     static event_attack = new EventKey<UnitAttackSync>('unitAttack')
     static event_move = new EventKey<UnitMoveSync>('unitMove')
     static event_collect = new EventKey<UnitSyncId>('unitCollect')
-    readonly display: T
-    abstract readonly type: UnitType
+    abstract type: UnitType
+    readonly display = new egret.Sprite()
     physic: UnitBody = new UnitBody(this)
     /** null for other player*/
     move: MoveControl | null = null
@@ -44,8 +43,12 @@ export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
         return this.display.name
     }
 
+    get baseEnergy() {
+        //Must be const
+        return 100
+    }
+
     //may static, or calculate base+ext(energy)
-    baseEnergy: number = 100 //or price
     maxEnergy: number = 100
     energyAsHealthRate: number = 1
     maxHealth: number = 100
@@ -57,10 +60,6 @@ export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
     //dynamic
     health: number = this.maxHealth
     energy: number = 0
-
-    abstract createObject(): T
-
-    private lastHealth = 0
 
     updateCollect(): void {
         this.physic.other.forEach(it => {
@@ -111,9 +110,11 @@ export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
     //End Move
 
     //Attack
-    abstract updateAttack(): void
+    updateAttack(): void {
+    }
 
-    abstract attackF(other: BaseUnit): void
+    attackF(other: BaseUnit): void {
+    }
 
     attackSync(other: BaseUnit) {
         NetworkMgr.send(BaseUnit.event_attack, {id: this.id, targetId: other.id})
@@ -124,13 +125,12 @@ export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
     constructor(public readonly player: PlayerInfo) {
         if (player.local)
             this.move = new MoveControl(this)
-        this.display = this.createObject()
         this.display.addEventListener(egret.Event.ADDED_TO_STAGE, this.init, this)
     }
 
     init(): void {
         this.updateBody()
-        this.display.$children = [this.infoDisplay]
+        this.display.addChild(this.infoDisplay)
     }
 
     update(): void {
@@ -152,5 +152,19 @@ export abstract class BaseUnit<T extends DisplayObject = DisplayObject> {
         Object.assign(this.display, {x, y, name: id})
         if (velocity) this.physic.velocity = velocity
         displayToP2(this.display, this.physic)
+    }
+
+    static registerNetwork() {
+        NetworkMgr.on(BaseUnit.event_attack, ({id, targetId}) => {
+            const target = EntityMgr.getUnitById(targetId)
+            if (target == null) return
+            EntityMgr.getUnitById(id)?.attackF(target)
+        })
+        NetworkMgr.on(BaseUnit.event_move, ({id, ...left}) => {
+            EntityMgr.getUnitById(id)?.moveF(left)
+        })
+        NetworkMgr.on(BaseUnit.event_collect, ({id}) => {
+            EntityMgr.getUnitById(id)?.collectF()
+        })
     }
 }

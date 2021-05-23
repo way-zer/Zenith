@@ -20,7 +20,6 @@ export class HealthControl {
     }
 
     damage(amount: number){
-
         if(this.unit.energy>0){
             const rate = this.unit.energyAsHealthRate
             if(amount > this.unit.energy*rate){
@@ -32,8 +31,5 @@ export class HealthControl {
             }
         }
         this.unit.health -= amount
-        if(this.unit.health <=0){
-            //TODO onDeath
-        }
     }
 }

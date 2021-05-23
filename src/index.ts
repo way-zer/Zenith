@@ -1,5 +1,7 @@
-import {Main} from "./Main";
+import {Main} from './Main'
+import {Core} from './entities/Core'
 
 // @ts-ignore
 window.Main = Main
-egret.runEgret({renderMode: "webgl", audioType: 0});
+console.log(Core.prototype)
+egret.runEgret({renderMode: 'webgl', audioType: 0})

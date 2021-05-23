@@ -4,8 +4,11 @@ import {StartMenu} from './components/StartMenu'
 import {GameHub} from './components/GameHub'
 import NetworkMgr from '../game/NetworkMgr'
 import {Main} from '../Main'
+import Icons from './components/Icons'
+import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
 
 class TheUI extends DisplayObjectContainer {
+    pkg: UIPackage
     startMenu: StartMenu
     gameHub: GameHub
 
@@ -14,9 +17,10 @@ class TheUI extends DisplayObjectContainer {
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this)
     }
 
-    private onAddToStage(){
+    private onAddToStage() {
         this.addChild(fgui.GRoot.inst.displayObject)
-        UIPackage.addPackage('UI')
+        this.pkg = UIPackage.addPackage('UI')
+        Icons.init()
         this.startMenu = new StartMenu()
         this.gameHub = new GameHub()
     }
@@ -37,6 +41,14 @@ class TheUI extends DisplayObjectContainer {
         this.startMenu.showGameOver()
         await NetworkMgr.disconnect()
         Main.reset()
+    }
+
+    createUnit(type: UnitType) {
+        EntityMgr.core?.createUnit(type)
+        const price = unitMap[type].prototype.baseEnergy
+        if (!EntityMgr.core || EntityMgr.core.energy < price) return
+        const {x, y} = EntityMgr.core.display
+        EntityMgr.addUnit(type, x, y)
     }
 }
 

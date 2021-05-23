@@ -1,15 +1,16 @@
 import {Core} from '../entities/Core'
 import {BaseUnit, BaseUnitSync} from '../entities/BaseUnit'
 import TheWorld from '../ui/TheWorld'
-import {randomPosition} from '../util'
-import ControlMgr from './ControlMgr'
 import {EventKey} from '../utils/Event'
 import NetworkMgr from './NetworkMgr'
 import {Player} from '@leancloud/play'
 import TheUI from '../ui/TheUI'
+import {ProductUnit} from '../entities/ProductUnit'
+import {randomPosition} from '../utils/display'
 
 export const unitMap = {
     Core,
+    ProductUnit,
 }
 export type UnitType = keyof typeof unitMap
 
@@ -33,9 +34,13 @@ class EntityMgr extends egret.DisplayObjectContainer {
         return null
     }
 
-    addUnitRandomly(type: keyof typeof unitMap) {
-        const info = Object.assign(randomPosition(), {type, id: this.nextId})
-        NetworkMgr.send(EntityMgr.event_addUnit, info)
+    addUnitRandomly(type: UnitType) {
+        const {x, y} = randomPosition()
+        this.addUnit(type, x, y)
+    }
+
+    addUnit(type: UnitType, x: number, y: number) {
+        NetworkMgr.send(EntityMgr.event_addUnit, {type, id: this.nextId, x, y})
     }
 
     addUnitF(info: BaseUnitSync & { sender: Player }) {
@@ -62,11 +67,32 @@ class EntityMgr extends egret.DisplayObjectContainer {
         this.children.delete(unit)
         this.removeChild(unit.display)
         TheWorld.physics.removeBody(unit.physic)
+        if (NetworkMgr.isMaster) {
+            //TODO 爆资源
+        }
     }
 
     init(layer: number) {
         this.zIndex = layer
         TheWorld.addChild(this)
+
+        this.registerNetwork()
+        BaseUnit.registerNetwork()
+        Core.registerNetwork()
+    }
+
+    update() {
+        this.children.forEach(it => it.update())
+    }
+
+    reset() {
+        this.core = undefined
+        this.children.clear()
+        this.$children.length = 0
+        TheWorld.physics.clear()
+    }
+
+    registerNetwork() {
         NetworkMgr.on(EntityMgr.event_addUnit, this.addUnitF.bind(this))
         NetworkMgr.on(NetworkMgr.event_newPlayer, ({sender}) => {
             const list = [] as BaseUnitSync[]
@@ -80,28 +106,6 @@ class EntityMgr extends egret.DisplayObjectContainer {
             list.forEach(it => this.addUnitF(Object.assign({sender}, it)))
         })
         NetworkMgr.on(EntityMgr.event_death, this.onDeathF.bind(this))
-        NetworkMgr.on(BaseUnit.event_attack, ({id, targetId}) => {
-            const target = this.getUnitById(targetId)
-            if (target == null) return
-            this.getUnitById(id)?.attackF(target)
-        })
-        NetworkMgr.on(BaseUnit.event_move, ({id, ...left}) => {
-            this.getUnitById(id)?.moveF(left)
-        })
-        NetworkMgr.on(BaseUnit.event_collect, ({id}) => {
-            this.getUnitById(id)?.collectF()
-        })
-    }
-
-    update() {
-        this.children.forEach(it => it.update())
-    }
-
-    reset() {
-        this.core = undefined
-        this.children.clear()
-        this.$children.length = 0
-        TheWorld.physics.clear()
     }
 }
 

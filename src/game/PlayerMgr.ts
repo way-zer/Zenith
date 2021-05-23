@@ -1,9 +1,7 @@
-import {Player as NetPlayer} from '@leancloud/play'
-import {randomColor} from '../util'
 import NetworkMgr from './NetworkMgr'
 import {EventKey} from '../utils/Event'
 import EntityMgr, {UnitType} from './EntityMgr'
-import tr = egret.sys.tr
+import {randomColor} from '../utils/display'
 
 declare module '@leancloud/play' {
     interface Player {
@@ -71,10 +69,10 @@ class PlayerMgr {
         })
     }
 
-    update(){
-        this.all.forEach(it=>it.reset())
-        EntityMgr.children.forEach(it=>{
-            it.player.allEnergy += it.baseEnergy+it.energy
+    update() {
+        this.all.forEach(it => it.reset())
+        EntityMgr.children.forEach(it => {
+            it.player.allEnergy += it.baseEnergy + it.energy
             it.player.units[it.type]++
         })
     }

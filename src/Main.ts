@@ -12,7 +12,7 @@ import {TheLoading} from './ui/TheLoading'
 export class Main extends DisplayObjectContainer {
     constructor() {
         super()
-        this.addEventListener(egret.Event.ADDED_TO_STAGE, async ()=>{
+        this.addEventListener(egret.Event.ADDED_TO_STAGE, async () => {
             this.width = this.stage.stageWidth
             this.height = this.stage.stageHeight
             await this.loadResource()
@@ -20,7 +20,7 @@ export class Main extends DisplayObjectContainer {
         }, this)
     }
 
-    async loadResource(){
+    async loadResource() {
         try {
             const loadingView = new TheLoading()
             this.stage.addChild(loadingView)
@@ -49,6 +49,7 @@ export class Main extends DisplayObjectContainer {
     }
 
     private lastTime = egret.getTimer()
+
     update() {
         Time.deltaTime = egret.getTimer() - this.lastTime
         this.lastTime = egret.getTimer()
@@ -63,7 +64,7 @@ export class Main extends DisplayObjectContainer {
         TheUI.update()
     }
 
-    static reset(){
+    static reset() {
         ResourceMgr.reset()
         EntityMgr.reset()
         ControlMgr.reset()

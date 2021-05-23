@@ -1,5 +1,5 @@
 import {BaseUnit} from '../BaseUnit'
-import {clamp} from '../../util'
+import {clamp} from '../../utils/other'
 
 export class UnitInfo extends egret.Shape{
     constructor(private unit:BaseUnit) {
