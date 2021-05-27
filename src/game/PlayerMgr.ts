@@ -16,8 +16,6 @@ type UnitMap = {
 type PlayerInfoSync = {
     name: string,
     color: number,
-    allEnergy: number,
-    units: UnitMap
 }
 
 export class PlayerInfo implements PlayerInfoSync {
@@ -33,17 +31,17 @@ export class PlayerInfo implements PlayerInfoSync {
     }
 
     asSync(): PlayerInfoSync {
-        const {name, color, allEnergy, units} = this
-        return {name, color, allEnergy, units}
+        const {name, color} = this
+        return {name, color}
     }
 
     static fromSync(sync: PlayerInfoSync) {
-        const {name, color, allEnergy, units} = sync
-        return Object.assign(new PlayerInfo(), {name, color, allEnergy, units})
+        const {name, color} = sync
+        return Object.assign(new PlayerInfo(), {name, color})
     }
 }
 
-class PlayerMgr {
+export class PlayerMgr {
     static event_info = new EventKey<PlayerInfoSync>('player_info')
     local = new PlayerInfo()
     all = new Set<PlayerInfo>()

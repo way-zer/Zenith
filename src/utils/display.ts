@@ -16,6 +16,7 @@ export function randomPosition(): { x: number, y: number } {
     }
 }
 
+/**绘制正多边形*/
 export function drawPolygonPoints(graphics: Graphics, centerX: number, centerY: number, sides: number, radius: number, startAngle: number = Math.PI / 2) {
     const points = []
     let angle = startAngle

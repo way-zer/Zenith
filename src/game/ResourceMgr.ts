@@ -33,7 +33,7 @@ class Res extends Shape implements ResInfo {
     }
 }
 
-class ResourceMgr extends DisplayObjectContainer {
+export class ResourceMgr extends DisplayObjectContainer {
     static event_generate = new EventKey<ResInfo>('res_generate')
     static event_list = new EventKey<{ list: ResInfo[] }>('res_generate')
     static event_destroy = new EventKey<DestroyInfo>('res_destroy')

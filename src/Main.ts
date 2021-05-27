@@ -8,6 +8,7 @@ import PlayerMgr from './game/PlayerMgr'
 import TheWorld from './ui/TheWorld'
 import TheUI from './ui/TheUI'
 import {TheLoading} from './ui/TheLoading'
+import NetworkMgr from './game/NetworkMgr'
 
 export class Main extends DisplayObjectContainer {
     constructor() {
@@ -20,6 +21,10 @@ export class Main extends DisplayObjectContainer {
         }, this)
     }
 
+    /**
+     * 加载资源文件
+     * 加载时自动显示TheLoading
+     */
     async loadResource() {
         try {
             const loadingView = new TheLoading()
@@ -35,6 +40,8 @@ export class Main extends DisplayObjectContainer {
     init() {
         PlayerMgr.init()
         ControlMgr.init()
+        // noinspection BadExpressionStatementJS
+        NetworkMgr //No init needed
         //Display
         this.addChild(TheWorld)//bg is -99
         ResourceMgr.init(-2)
@@ -44,7 +51,8 @@ export class Main extends DisplayObjectContainer {
         //Finish
         this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
         (window as any).DEBUG = {
-            PlayerMgr, ResourceMgr, EntityMgr,
+            PlayerMgr, ControlMgr, ResourceMgr, EntityMgr, NetworkMgr,
+            TheWorld, TheUI,
         }
     }
 

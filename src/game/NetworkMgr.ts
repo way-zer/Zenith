@@ -4,12 +4,20 @@ import {EventKey, MyEventEmitter} from '../utils/Event'
 import EntityMgr from './EntityMgr'
 import {Main} from '../Main'
 
-/**@implements MyEventEmitter broadcast event in room*/
-class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
+/**
+ * 依赖LeanCloud提供的多人对战SDK，负责游戏的网络通信
+ * @implements MyEventEmitter 在房间范围广播事件
+ */
+export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
+    /**成功加入房间*/
     event_joined = new EventKey('joined')
+    /**有其他玩家加入房间*/
     event_newPlayer = new EventKey('newPlayer')
-    event_quitPlayer = new EventKey('quitPlayer')//quit
+    /**其他玩家退出房间*/
+    event_quitPlayer = new EventKey('quitPlayer')
+    /**leanCloud的客户端实例*/
     client: Client
+    /**当前网络状态*/
     state: 'unConnect' | 'connecting' | 'reconnect' | 'gaming' = 'unConnect'
 
     constructor() {
@@ -23,6 +31,10 @@ class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         this.listen()
     }
 
+    /**
+     * 连接到服务器,加入随机房间
+     * @throws any 如果网络连接中出现任何问题
+     */
     async connect() {
         await this.client.connect()
         try {
@@ -41,6 +53,9 @@ class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         this.state = 'gaming'
     }
 
+    /**
+     * 断开连接
+     */
     async disconnect() {
         this.state = 'unConnect'
         await this.client.close()
@@ -78,6 +93,9 @@ class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         })
     }
 
+    /**
+     * 是否是Master,一个房间内仅存在一位master
+     */
     get isMaster(): boolean {
         return this.client.room && this.client.player?.isMaster
     }
@@ -86,10 +104,22 @@ class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         this.client.sendEvent(event.id, arg, options).then()
     }
 
+    /**
+     * 向特定玩家发送事件
+     * @param event 事件类型
+     * @param arg 事件内容
+     * @param peer 目标玩家
+     */
     sendPeer<T>(event: EventKey<T>, arg: T, peer: Player) {
         this.send0(event, arg, {targetActorIds: [peer.actorId]})
     }
 
+    /**
+     * 在房间内广播事件
+     * @param event 事件类型
+     * @param arg 事件内容
+     * @param excludeSelf 排除自己接收事件
+     */
     send<T>(event: EventKey<T>, arg: T, excludeSelf: boolean = false) {
         this.send0(event, arg, {receiverGroup: ReceiverGroup.Others})
         if (!excludeSelf)

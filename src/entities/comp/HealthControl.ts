@@ -4,6 +4,7 @@ export class HealthControl {
     constructor(private readonly unit: BaseUnit) {
     }
 
+    /**捡到资源点*/
     pickEnergy(amount: number) {
         const healthLoss = this.unit.maxHealth - this.unit.health;
         if(healthLoss > 0){
@@ -19,6 +20,7 @@ export class HealthControl {
         this.unit.energy = Math.min(this.unit.energy + amount, this.unit.maxEnergy)
     }
 
+    /**收到伤害处理*/
     damage(amount: number){
         if(this.unit.energy>0){
             const rate = this.unit.energyAsHealthRate

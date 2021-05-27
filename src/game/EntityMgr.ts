@@ -14,18 +14,31 @@ export const unitMap = {
 }
 export type UnitType = keyof typeof unitMap
 
-class EntityMgr extends egret.DisplayObjectContainer {
+export class EntityMgr extends egret.DisplayObjectContainer {
     static event_addUnit = new EventKey<BaseUnitSync>('addUnit')
     static event_listUnit = new EventKey<{ list: BaseUnitSync[] }>('listUnit')
     static event_death = new EventKey<{ id: string }>('death')
     private static lastId = 0
+    /**
+     * 所有在场单位
+     */
     children = new Set<BaseUnit>()
+    /**
+     * 本地玩家的核心
+     */
     core?: Core
 
+    /**
+     * 下一个唯一id
+     */
     get nextId() {
         return NetworkMgr.client.userId + '_' + (EntityMgr.lastId++)
     }
 
+    /**
+     * 通过id获取单位
+     * @param id 单位唯一id
+     */
     getUnitById(id: string): BaseUnit | null {
         for (let it of this.children) {
             if (it.id == id)
@@ -34,11 +47,22 @@ class EntityMgr extends egret.DisplayObjectContainer {
         return null
     }
 
+    /**
+     * 添加一个随机位置的单位
+     * @param type 单位类型
+     * @see addUnit
+     */
     addUnitRandomly(type: UnitType) {
         const {x, y} = randomPosition()
         this.addUnit(type, x, y)
     }
 
+    /**
+     * 添加一个随机位置的单位
+     * @param type 单位类型
+     * @param x 坐标x
+     * @param y 坐标y
+     */
     addUnit(type: UnitType, x: number, y: number) {
         NetworkMgr.send(EntityMgr.event_addUnit, {type, id: this.nextId, x, y})
     }
@@ -54,6 +78,10 @@ class EntityMgr extends egret.DisplayObjectContainer {
         }
     }
 
+    /**
+     * 单位死亡
+     * @param unit 死亡的单位
+     */
     onDeath(unit: BaseUnit) {
         NetworkMgr.send(EntityMgr.event_death, {id: unit.display.name})
     }

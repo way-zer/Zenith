@@ -5,7 +5,7 @@ import EntityMgr from './EntityMgr'
 import {clamp} from '../utils/other'
 import TouchEvent = egret.TouchEvent
 
-class ControlMgr {
+export class ControlMgr {
     private downKey = new Map()
     private offset = [0, 0]
 
@@ -29,7 +29,7 @@ class ControlMgr {
     }
 
     update() {
-        const left = this.key(['keyA', 'ArrowLeft']) ? 1 : 0
+        const left = this.key(['KeyA', 'ArrowLeft']) ? 1 : 0
         const right = this.key(['KeyD', 'ArrowRight']) ? 1 : 0
         const down = this.key(['KeyS', 'ArrowDown']) ? 1 : 0
         const up = this.key(['KeyW', 'ArrowUp']) ? 1 : 0
