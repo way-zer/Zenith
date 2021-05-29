@@ -2,33 +2,44 @@ import TheWorld from '../ui/TheWorld'
 import {config} from '../config'
 import {Time} from '../utils/Time'
 import EntityMgr from './EntityMgr'
-import {clamp} from '../utils/other'
+import {clamp, fixRect} from '../utils/other'
+import EntityExtDraw from '../ui/EntityExtDraw'
+import {BaseUnit} from '../entities/BaseUnit'
 import TouchEvent = egret.TouchEvent
 
 export class ControlMgr {
     private downKey = new Map()
     private offset = [0, 0]
-
+    private selectArea = new egret.Rectangle()
+    private selectStart?: number
+    private selected = [] as BaseUnit[] //unit may death when use
 
     /**@return boolean any key is down*/
     key(keys: string[]): boolean {
         return keys.some(it => this.downKey.get(it))
     }
 
+    private validSelect() {
+        return (this.selectStart && (Time.now - this.selectStart) > config.camera.minSelectTime)
+            && p2.vec2.length([this.selectArea.width, this.selectArea.height]) > config.camera.minSelectDistance
+    }
+
     init() {
-        TheWorld.addEventListener(egret.Event.ENTER_FRAME, this.update, this, undefined, 100)
+        //listen key
         document.addEventListener('keydown', (e) => {
             this.downKey.set(e.code, true)
         })
         document.addEventListener('keyup', (e) => {
             this.downKey.delete(e.code)
         })
+        //listen scale
         document.addEventListener('wheel', ControlMgr.onWheel)
-        TheWorld.touchEnabled = true
-        TheWorld.addEventListener(TouchEvent.TOUCH_TAP, ControlMgr.onTap, undefined)
+        //listen touch
+        this.listenTouch()
     }
 
     update() {
+        /// Update Camera
         const left = this.key(['KeyA', 'ArrowLeft']) ? 1 : 0
         const right = this.key(['KeyD', 'ArrowRight']) ? 1 : 0
         const down = this.key(['KeyS', 'ArrowDown']) ? 1 : 0
@@ -38,6 +49,13 @@ export class ControlMgr {
         this.offset[1] += (down - up) * Time.deltaTime * config.camera.speed
         const {x, y} = EntityMgr?.core?.display || {x: 0, y: 0}
         TheWorld.setCenter(x + this.offset[0], y + this.offset[1])
+        /// draw select area
+        if (this.validSelect()) {
+            const g = EntityExtDraw.graphics
+            g.lineStyle(1, 0x00ffff)
+            const {x, y, height, width} = this.selectArea
+            g.drawRect(x, y, width, height)
+        }
     }
 
     reset() {
@@ -51,9 +69,47 @@ export class ControlMgr {
         TheWorld.scaleX = TheWorld.scaleY = newScale
     }
 
-    private static onTap(e: egret.TouchEvent) {
-        EntityMgr.core?.move?.moveTo(e.localX, e.localY)
-        //TODO 增加集体指挥
+    ///拖动选择
+    private listenTouch() {
+        TheWorld.touchEnabled = true
+        TheWorld.addEventListener(TouchEvent.TOUCH_BEGIN, (e) => {
+            this.selectArea.setTo(e.localX, e.localY, 0, 0)
+            this.selectStart = Time.now
+        }, undefined)
+        TheWorld.addEventListener(TouchEvent.TOUCH_MOVE, (e) => {
+            this.selectArea.right = e.localX
+            this.selectArea.bottom = e.localY
+        }, undefined)
+        let once = true
+        const endTouch = () => {
+            if (this.validSelect()) {
+                this.selected.forEach(it => it.infoDisplay.selected = false)
+                this.selected.length = 0
+                fixRect(this.selectArea)
+                EntityMgr.children.forEach(it => {
+                    if (this.selectArea.contains(it.display.x, it.display.y) && it.player.local) {
+                        this.selected.push(it)
+                        it.infoDisplay.selected = true
+                    }
+                })
+                once = true
+            }
+            this.selectStart = undefined
+            this.selectArea.setEmpty()
+        }
+        TheWorld.addEventListener(TouchEvent.TOUCH_END, endTouch, undefined)
+        TheWorld.addEventListener(TouchEvent.TOUCH_RELEASE_OUTSIDE, endTouch, undefined)
+        TheWorld.addEventListener(TouchEvent.TOUCH_TAP, (e) => {
+            if (once) {//忽略拖动的第一次
+                once = false
+                return
+            }
+            this.selected.forEach(it => {
+                if (it.health > 0) {
+                    it.move?.moveTo(e.localX, e.localY)
+                }
+            })
+        }, undefined)
     }
 }
 

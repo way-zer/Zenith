@@ -56,11 +56,8 @@ export class Main extends DisplayObjectContainer {
         }
     }
 
-    private lastTime = egret.getTimer()
-
     update() {
-        Time.deltaTime = egret.getTimer() - this.lastTime
-        this.lastTime = egret.getTimer()
+        Time.updateDelta()
         EntityExtDraw.preUpdate()
 
         TheWorld.updatePhysics()
@@ -70,6 +67,7 @@ export class Main extends DisplayObjectContainer {
         PlayerMgr.update()
 
         TheUI.update()
+        NetworkMgr.batchSend()
     }
 
     static reset() {

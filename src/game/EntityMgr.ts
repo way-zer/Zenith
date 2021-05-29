@@ -6,7 +6,9 @@ import NetworkMgr from './NetworkMgr'
 import {Player} from '@leancloud/play'
 import TheUI from '../ui/TheUI'
 import {ProductUnit} from '../entities/ProductUnit'
-import {randomPosition} from '../utils/display'
+import {randomPosition, randomPositionAround} from '../utils/display'
+import {config} from '../config'
+import ResourceMgr from './ResourceMgr'
 
 export const unitMap = {
     Core,
@@ -96,7 +98,12 @@ export class EntityMgr extends egret.DisplayObjectContainer {
         this.removeChild(unit.display)
         TheWorld.physics.removeBody(unit.physic)
         if (NetworkMgr.isMaster) {
-            //TODO 爆资源
+            const all = unit.baseEnergy * config.game.resOnDeath
+            const num = Math.min(config.game.resNumOnDeath, all / config.game.resEnergy)
+            for (let i = 0; i < num; i++) {
+                const {x, y} = randomPositionAround(unit.display, unit.radius)
+                ResourceMgr.generate(x, y, Math.sqrt(all / num / config.game.resEnergy))
+            }
         }
     }
 

@@ -18,10 +18,18 @@ export class Core extends BaseUnit {
     attackSpeed = 200
 
     scale: number = 1
+    energyTransfer = new p2.Circle()
+
+    init() {
+        super.init()
+        this.physic.otherShape.push(this.energyTransfer)
+        this.physic.updateShape()
+    }
 
     updateBody() {
         this.scale = 1 + this.energy / 50
         this.radius = 15 * this.scale
+        this.energyTransfer.radius = 3 * this.radius
         super.updateBody()
     }
 
@@ -38,16 +46,20 @@ export class Core extends BaseUnit {
         drawPolygonPoints(graphics, 0, 0, 8, 16 * this.scale)
         graphics.endFill()
         graphics.beginFill(this.player.color)
-        graphics.lineStyle(1, 1, 0x993300)
+        graphics.lineStyle(1, 0x993300)
         graphics.drawCircle(0, 0, 8 * this.scale)
+        graphics.endFill()
+        graphics.lineStyle(1, 0xCF61D1, 0.3, undefined, undefined, undefined, undefined, undefined, [4, 5])
+        graphics.drawCircle(0, 0, this.energyTransfer.radius)
     }
 
     attackInterval = new Interval()
 
     updateAttack(): void {
+        if (!this.player.local) return
         this.attackInterval.check(this.attackSpeed, false)
-        for (let it of this.physic.other) {
-            if (it instanceof UnitBody && it.unit.player != this.player) {
+        for (let it of this.physic.mainShape.other) {
+            if (it instanceof UnitBody && !it.unit.player.local) {
                 this.attackSync(it.unit)
                 this.attackInterval.reset()
                 return
@@ -57,6 +69,16 @@ export class Core extends BaseUnit {
 
     attackF(other: BaseUnit) {
         other.healthC.damage(this.attackDamage)
+    }
+
+    updateCollect() {
+        super.updateCollect()
+        for (let it of this.energyTransfer.other) {
+            if (it instanceof UnitBody && it.unit.player.local) {
+                this.energy += it.unit.energy
+                it.unit.energy = 0
+            }
+        }
     }
 
     //skill

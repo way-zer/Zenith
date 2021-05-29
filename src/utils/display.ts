@@ -9,10 +9,19 @@ export function randomColor() {
     return colors[Phaser.Math.Between(0, 29) * 12].color
 }
 
-export function randomPosition(): { x: number, y: number } {
+type Pos = { x: number, y: number }
+
+export function randomPosition(): Pos {
     return {
         x: Math.random() * config.world.width,
         y: Math.random() * config.world.height,
+    }
+}
+
+export function randomPositionAround(c: Pos, radius: number): Pos {
+    return {
+        x: c.x + (Math.random() * 2 - 1) * radius,
+        y: c.y + (Math.random() * 2 - 1) * radius,
     }
 }
 
@@ -28,4 +37,27 @@ export function drawPolygonPoints(graphics: Graphics, centerX: number, centerY: 
     for (let i = sides - 1; i >= 0; i--) {
         graphics.lineTo(points[i].x, points[i].y)
     }
+}
+
+/**
+ * 绘制进度条
+ * @param g 图形
+ * @param centerX 中心x
+ * @param centerY 中心y
+ * @param width 进度条宽度
+ * @param height 进度条高度
+ * @param thickness 边框宽度
+ * @param color 填充色
+ * @param progress 进度 0-1
+ */
+export function drawProgress(g: Graphics, centerX: number, centerY: number, width: number, height: number, thickness: number, color: number, progress: number) {
+    g.lineStyle(thickness, 0)
+    g.drawRect(centerX - width / 2, centerY - height / 2, width, height)
+    g.beginFill(color)
+    g.drawRect(
+        centerX - width / 2 + thickness,
+        centerY - height / 2 + thickness,
+        (width - 2 * thickness) * progress,
+        height - 2 * thickness)
+    g.endFill()
 }

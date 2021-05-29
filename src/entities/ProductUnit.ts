@@ -10,6 +10,7 @@ export class ProductUnit extends BaseUnit {
         return 20
     }
 
+    maxEnergy = 30
     radius = 12
     speed = 200
     iconDisplay = new egret.Bitmap(Icons.warPick)
@@ -21,12 +22,7 @@ export class ProductUnit extends BaseUnit {
         graphics.lineStyle(1, 0x66FF99)
         drawPolygonPoints(graphics, 0, 0, 3, this.radius)
         graphics.endFill()
-    }
-
-    updateAttack() {//noop
-    }
-
-    attackF(other: BaseUnit) {//noop
+        this.display.cacheAsBitmap = true
     }
 
     init() {
@@ -39,6 +35,7 @@ export class ProductUnit extends BaseUnit {
         mask.graphics.beginFill(1)
         mask.graphics.drawCircle(0, 0, iconSize)
         mask.graphics.endFill()
+        mask.cacheAsBitmap = true
         this.iconDisplay.mask = mask
 
         this.display.addChild(this.iconDisplay)

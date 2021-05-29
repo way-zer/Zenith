@@ -15,10 +15,13 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
     event_newPlayer = new EventKey('newPlayer')
     /**其他玩家退出房间*/
     event_quitPlayer = new EventKey('quitPlayer')
+    /**用于批量传包*/
+    event_batch = new EventKey<{ list: { event: number, data: any }[] }>('batch')
     /**leanCloud的客户端实例*/
     client: Client
     /**当前网络状态*/
     state: 'unConnect' | 'connecting' | 'reconnect' | 'gaming' = 'unConnect'
+    batchEvents = [] as { event: number, data: any }[]
 
     constructor() {
         super()
@@ -36,6 +39,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
      * @throws any 如果网络连接中出现任何问题
      */
     async connect() {
+        this.batchEvents.length = 0
         await this.client.connect()
         try {
             await this.client.joinRandomRoom()
@@ -59,6 +63,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
     async disconnect() {
         this.state = 'unConnect'
         await this.client.close()
+        this.batchEvents.length = 0
     }
 
     private listen() {
@@ -91,6 +96,16 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
             const sender = this.client.room.getPlayer(senderId)
             this.emit(key, Object.assign({sender}, eventData))
         })
+        this.on(this.event_batch, ({list, sender}) => {
+            list.forEach(({event: eventId, data}) => {
+                const key = EventKey.getById(eventId)
+                if (!key) {
+                    console.log('event (id:' + eventId + ') not support: ', data)
+                    return
+                }
+                this.emit(key, Object.assign({sender}, data))
+            })
+        })
     }
 
     /**
@@ -118,12 +133,23 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
      * 在房间内广播事件
      * @param event 事件类型
      * @param arg 事件内容
+     * @param batch 是否允许批量发包
      * @param excludeSelf 排除自己接收事件
      */
-    send<T>(event: EventKey<T>, arg: T, excludeSelf: boolean = false) {
-        this.send0(event, arg, {receiverGroup: ReceiverGroup.Others})
+    send<T>(event: EventKey<T>, arg: T, batch: boolean = false, excludeSelf: boolean = false) {
+        if (batch)
+            this.batchEvents.push({event: event.id, data: arg})
+        else
+            this.send0(event, arg, {receiverGroup: ReceiverGroup.Others})
         if (!excludeSelf)
             this.emit(event, Object.assign({sender: this.client.player}, arg))
+    }
+
+    batchSend() {
+        if (this.batchEvents.length) {
+            this.send(this.event_batch, {list: this.batchEvents}, false, true)
+            this.batchEvents.length = 0
+        }
     }
 }
 

@@ -9,6 +9,7 @@ import {EventKey} from '../utils/Event'
 import NetworkMgr from '../game/NetworkMgr'
 import {displayToP2, p2ToDisplay} from '../utils/physics'
 import EntityMgr, {UnitType} from '../game/EntityMgr'
+import {config} from '../config'
 
 type UnitSyncId = { id: string }
 export type BaseUnitSync = UnitSyncId & {
@@ -30,7 +31,7 @@ export type UnitMoveSync = UnitSyncId & {
 export abstract class BaseUnit {
     static event_attack = new EventKey<UnitAttackSync>('unitAttack')
     static event_move = new EventKey<UnitMoveSync>('unitMove')
-    static event_collect = new EventKey<UnitSyncId>('unitCollect')
+    static event_collect = new EventKey<UnitSyncId & { scale: number }>('unitCollect')
     abstract type: UnitType
     readonly display = new egret.Sprite()
     physic: UnitBody = new UnitBody(this)
@@ -62,15 +63,17 @@ export abstract class BaseUnit {
     energy: number = 0
 
     updateCollect(): void {
-        this.physic.other.forEach(it => {
-            if (ResourceMgr.isRes(it, true)) {
-                NetworkMgr.send(BaseUnit.event_collect, {id: this.id})
+        this.physic.mainShape.other.forEach(it => {
+            if (this.energy < this.maxEnergy) {
+                const scale = ResourceMgr.isRes(it, true)
+                if (scale)
+                    NetworkMgr.send(BaseUnit.event_collect, {id: this.id, scale})
             }
         })
     }
 
-    collectF() {
-        this.healthC.pickEnergy(3)
+    collectF(scale: number) {
+        this.healthC.pickEnergy(config.game.resEnergy * scale * scale)
     }
 
     /**更新大小,碰撞箱,体积等,必要时可以重绘*/
@@ -97,7 +100,7 @@ export abstract class BaseUnit {
                 this.lastV = p2.vec2.clone(velocity)
                 NetworkMgr.send(BaseUnit.event_move, {
                     id: this.id, position, velocity,
-                }, true)
+                }, true, true)
             }
         }
     }
@@ -163,8 +166,8 @@ export abstract class BaseUnit {
         NetworkMgr.on(BaseUnit.event_move, ({id, ...left}) => {
             EntityMgr.getUnitById(id)?.moveF(left)
         })
-        NetworkMgr.on(BaseUnit.event_collect, ({id}) => {
-            EntityMgr.getUnitById(id)?.collectF()
+        NetworkMgr.on(BaseUnit.event_collect, ({id, scale}) => {
+            EntityMgr.getUnitById(id)?.collectF(scale)
         })
     }
 }

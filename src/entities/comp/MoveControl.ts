@@ -1,6 +1,7 @@
 import {BaseUnit} from '../BaseUnit'
 import EntityExtDraw from '../../ui/EntityExtDraw'
 import {displayToP2, p2ToDisplay} from '../../utils/physics'
+import {config} from '../../config'
 import Point = egret.Point
 
 class Path {
@@ -24,6 +25,10 @@ export class MoveControl {
     }
 
     moveTo(x: number, y: number) {
+        if (config.game.singleClickMove) {
+            this.paths = []
+            this.moved = 0
+        }
         const lastPoint = this.paths.length ? this.paths[this.paths.length - 1].to : this.pos
         this.paths.push(new Path(new Point(lastPoint.x, lastPoint.y), new Point(x, y)))
     }

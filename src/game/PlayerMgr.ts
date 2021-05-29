@@ -43,6 +43,7 @@ export class PlayerInfo implements PlayerInfoSync {
 
 export class PlayerMgr {
     static event_info = new EventKey<PlayerInfoSync>('player_info')
+    highest = 0
     local = new PlayerInfo()
     all = new Set<PlayerInfo>()
 
@@ -50,7 +51,7 @@ export class PlayerMgr {
         this.reset()
         NetworkMgr.on(NetworkMgr.event_joined, ({sender}) => {
             sender.myInfo = this.local
-            NetworkMgr.send(PlayerMgr.event_info, this.local.asSync(), true)
+            NetworkMgr.send(PlayerMgr.event_info, this.local.asSync(), false, true)
         })
         NetworkMgr.on(NetworkMgr.event_newPlayer, ({sender}) => {
             NetworkMgr.sendPeer(PlayerMgr.event_info, this.local.asSync(), sender)
@@ -73,9 +74,11 @@ export class PlayerMgr {
             it.player.allEnergy += it.baseEnergy + it.energy
             it.player.units[it.type]++
         })
+        this.highest = Math.max(this.highest, this.local.allEnergy)
     }
 
     reset() {
+        this.highest = 0
         this.local.reset()
         this.local.local = true
         this.all.clear()

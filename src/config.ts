@@ -3,6 +3,8 @@ export const config = {
         speed: 2, //pixels pre ms
         maxScale: 5,
         minScale: 0.3,
+        minSelectTime: 120, //ms
+        minSelectDistance: 50, //pixel
     },
     world: {
         width: 1280 * 5,
@@ -16,6 +18,10 @@ export const config = {
     game: {
         resourceGenInterval: 10, //in ms
         resourceGenMax: 500,
+        resEnergy: 3,
+        singleClickMove: true,
+        resOnDeath: 0.3,
+        resNumOnDeath: 5,
     },
     version: '0.1.0',
 }

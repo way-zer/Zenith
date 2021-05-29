@@ -4,28 +4,29 @@ import NetworkMgr from './NetworkMgr'
 import {config} from '../config'
 import {Interval} from '../utils/Time'
 import {Player} from '@leancloud/play'
-import {randomColor} from '../utils/display'
+import {randomColor, randomPosition} from '../utils/display'
 import {displayToP2} from '../utils/physics'
 import DisplayObjectContainer = egret.DisplayObjectContainer
 import Shape = egret.Shape
 
-type ResInfo = { x: number, y: number, id: number }
+type ResInfo = { x: number, y: number, id: number, scale: number }
 type DestroyInfo = { name: string }
 
 class Res extends Shape implements ResInfo {
     id: number
     physics: p2.Body
+    scale: number = 1
 
     constructor(info: ResInfo) {
         super()
-        this.graphics.beginFill(randomColor())
-        this.graphics.drawCircle(0, 0, 6)
-        this.graphics.endFill()
         Object.assign(this, info)
         this.name = 'res_' + info.id
+        this.graphics.beginFill(randomColor())
+        this.graphics.drawCircle(0, 0, 6 * this.scale)
+        this.graphics.endFill()
 
         const body = new p2.Body()
-        body.addShape(new p2.Circle({radius: 6, sensor: true}))
+        body.addShape(new p2.Circle({radius: 6 * this.scale, sensor: true}))
         body.displays = [this]
         displayToP2(this, body)
 
@@ -50,12 +51,16 @@ export class ResourceMgr extends DisplayObjectContainer {
         })
     }
 
-    generate() {
+    generateRandom() {
         if (!NetworkMgr.isMaster) throw 'Only Master'
+        const {x, y} = randomPosition()
+        this.generate(x, y, 1)
+    }
+
+    generate(x: number, y: number, scale: number) {
         const info: ResInfo = {
-            x: Math.random() * config.world.width,
-            y: Math.random() * config.world.height,
             id: ResourceMgr.lastGenerate++,
+            x, y, scale,
         }
         NetworkMgr.send(ResourceMgr.event_generate, info)
     }
@@ -76,16 +81,21 @@ export class ResourceMgr extends DisplayObjectContainer {
         NetworkMgr.sendPeer(ResourceMgr.event_list, {list}, player.sender)
     }
 
-    isRes(body: p2.Body, destroy: boolean = false): boolean {
-        if (!body.displays) return false
+    /**
+     * @param body 需要判断的物理实体
+     * @param destroy 是否立刻销毁
+     * @return 0 如果否,否则返回scale
+     */
+    isRes(body: p2.Body, destroy: boolean = false): number {
+        if (!body.displays) return 0
         const inst = body.displays[0]
-        if (inst && this.contains(inst)) {
+        if (inst instanceof Res && this.contains(inst)) {
             if (destroy) {
                 NetworkMgr.send(ResourceMgr.event_destroy, {name: inst.name})
             }
-            return true
+            return inst.scale
         }
-        return false
+        return 0
     }
 
     destroyF(info: DestroyInfo) {
@@ -101,7 +111,7 @@ export class ResourceMgr extends DisplayObjectContainer {
     update() {
         if (NetworkMgr.isMaster && this.interval.check(config.game.resourceGenInterval)) {
             if (this.numChildren < config.game.resourceGenMax) {
-                this.generate()
+                this.generateRandom()
             }
         }
     }
