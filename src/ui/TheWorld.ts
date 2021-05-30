@@ -3,6 +3,7 @@ import Bitmap = egret.Bitmap
 import BitmapFillMode = egret.BitmapFillMode
 import {UnitBody} from '../entities/comp/PhysicBody'
 import {Time} from '../utils/Time'
+import {config} from '../config'
 
 class TheWorld extends DisplayObjectContainer {
     physics = new p2.World()
@@ -21,14 +22,15 @@ class TheWorld extends DisplayObjectContainer {
     private setBg() {
         this.x = this.stage.stageWidth / 2
         this.y = this.stage.stageHeight / 2
-        this.width = this.stage.stageWidth * 5
-        this.height = this.stage.stageHeight * 5
+        this.width = config.world.width
+        this.height = config.world.height
         const bg = new Bitmap()
         bg.texture = RES.getRes('bgGrid')
         bg.fillMode = BitmapFillMode.REPEAT
         bg.width = this.width
         bg.height = this.height
         bg.zIndex = -99
+        bg.tint = config.camera.background
         this.addChild(bg)
     }
 

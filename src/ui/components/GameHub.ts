@@ -1,6 +1,5 @@
 import {RankList} from './RankList'
 import PlayerMgr from '../../game/PlayerMgr'
-import TheUI from '../TheUI'
 import EntityMgr, {unitMap, UnitType} from '../../game/EntityMgr'
 
 type UnitBtn = { ref: fgui.GButton, type: UnitType }
@@ -23,7 +22,9 @@ export class GameHub {
 
     bindUnitBtn(name: string, type: UnitType) {
         const ref = this.ref.getChild(name).asButton
-        ref.addClickListener(TheUI.createUnit.bind(TheUI, type))
+        ref.addClickListener(() => {
+            EntityMgr.core?.createUnit(type)
+        })
         ref.enabled = false
         this.unitBtn.push({ref, type})
     }

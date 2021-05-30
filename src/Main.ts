@@ -9,6 +9,7 @@ import TheWorld from './ui/TheWorld'
 import TheUI from './ui/TheUI'
 import {TheLoading} from './ui/TheLoading'
 import NetworkMgr from './game/NetworkMgr'
+import {config} from './config'
 
 export class Main extends DisplayObjectContainer {
     constructor() {
@@ -16,6 +17,7 @@ export class Main extends DisplayObjectContainer {
         this.addEventListener(egret.Event.ADDED_TO_STAGE, async () => {
             this.width = this.stage.stageWidth
             this.height = this.stage.stageHeight
+            this.stage.tint = config.camera.background
             await this.loadResource()
             this.init()
         }, this)

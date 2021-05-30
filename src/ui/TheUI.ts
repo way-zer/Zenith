@@ -5,7 +5,6 @@ import {GameHub} from './components/GameHub'
 import NetworkMgr from '../game/NetworkMgr'
 import {Main} from '../Main'
 import Icons from './components/Icons'
-import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
 
 class TheUI extends DisplayObjectContainer {
     pkg: UIPackage
@@ -41,14 +40,6 @@ class TheUI extends DisplayObjectContainer {
         this.startMenu.showGameOver()
         await NetworkMgr.disconnect()
         Main.reset()
-    }
-
-    createUnit(type: UnitType) {
-        EntityMgr.core?.createUnit(type)
-        const price = unitMap[type].prototype.baseEnergy
-        if (!EntityMgr.core || EntityMgr.core.energy < price) return
-        const {x, y} = EntityMgr.core.display
-        EntityMgr.addUnit(type, x, y)
     }
 }
 
