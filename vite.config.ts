@@ -1,14 +1,27 @@
 import {defineConfig} from 'vite'
+import {resolve} from 'path'
+import {visualizer} from 'rollup-plugin-visualizer'
 
-const {resolve} = require('path')
-
-export default defineConfig({
+export default defineConfig(({command}) => ({
+    plugins: [
+        visualizer(),
+    ],
     resolve: {
         alias: [
             {find: '@', replacement: resolve(__dirname, 'src')},
         ],
     },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('@leancloud/play'))
+                        return 'leanCloud'
+                },
+            },
+        },
+    },
     server: {
         port: 8082,
     },
-})
+}))

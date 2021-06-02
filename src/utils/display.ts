@@ -1,12 +1,13 @@
-import Phaser from 'phaser'
+// @ts-ignore
+import HSVColorWheel from 'phaser/src/display/color/HSVColorWheel'
 import {config} from '../config'
 import Graphics = egret.Graphics
 
-const colors = Phaser.Display.Color.HSVColorWheel(1, 1)
+const colors = HSVColorWheel(1, 1)
 
 export function randomColor() {
     // @ts-ignore
-    return colors[Phaser.Math.Between(0, 29) * 12].color
+    return colors[Math.floor(Math.random() * 30) * 12].color
 }
 
 type Pos = { x: number, y: number }

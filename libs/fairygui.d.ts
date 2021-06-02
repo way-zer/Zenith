@@ -2440,4 +2440,3 @@ declare module fgui {
         static setColorFilter(obj: egret.DisplayObject, color?: number | number[] | boolean): void;
     }
 }
-import fairygui = fgui;
