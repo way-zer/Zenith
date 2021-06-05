@@ -4,7 +4,7 @@
     <component id="t5xr5" name="Button_Start.xml" path="/Start/"/>
     <component id="t5xr8" name="GameHub.xml" path="/HUB/" exported="true"/>
     <component id="q66rc" name="rankListItem.xml" path="/HUB/" exported="true"/>
-    <component id="p941e" name="emoji.xml" path="/Chat/" exported="true"/>
+    <component id="p941e" name="ChatMenu.xml" path="/Chat/" exported="true"/>
     <image id="hhq5i" name="PlayerPathContent_TEMP_8_515.tex.png" path="/Start/assets/" scale="9grid" scale9grid="60,47,19,8"/>
     <image id="hhq5l" name="UI_CRB_Basekit_1_0_1117.tex.png" path="/Start/assets/" scale9grid="70,42,22,15" qualityOption="source"/>
     <image id="hhq5m" name="UI_CRB_Tooltip_516_26.tex.png" path="/HUB/assets/" scale="9grid" scale9grid="14,14,28,28"/>
@@ -17,11 +17,8 @@
     <image id="hhq5t" name="UI_CRB_Basekit_1_353_457.tex.png" path="/HUB/assets/" scale9grid="0,0,-26,-24"/>
     <image id="hhq5v" name="ringed-planet.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <image id="hhq5x" name="sharp-shuriken.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
-    <component id="hhq516" name="Button_CreateIcon(1).xml" path="/HUB/buttons/"/>
     <image id="hhq519" name="honeycomb.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
-    <component id="hhq51b" name="Button_CreateIcon0.xml" path="/HUB/buttons/"/>
     <component id="hhq51c" name="Button_CreateIcon.xml" path="/HUB/buttons/" exported="true"/>
-    <component id="hhq51d" name="Button_CreateIcon(3).xml" path="/HUB/buttons/"/>
     <component id="hhq51g" name="StartMenu.xml" path="/Start/" exported="true"/>
     <image id="hhq51i" name="hamburger-menu.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
     <image id="hhq51j" name="keyboard.svg" path="/HUB/buttons/assets/" width="512" height="512"/>
@@ -29,20 +26,20 @@
     <component id="hhq51l" name="Button1.xml" path="/HUB/buttons/"/>
     <component id="hhq51m" name="Button2.xml" path="/HUB/buttons/"/>
     <component id="q4bl1q" name="Button3.xml" path="/HUB/buttons/"/>
-    <image id="q4bl1t" name="archers-arrow.png" path="/HUB/buttons/assets/" exported="true"/>
-    <image id="jryg1w" name="heart.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
-    <image id="jryg1x" name="war-pick.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
-    <image id="jryg1y" name="crossed-swords.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
-    <image id="jryg1z" name="bow-arrow.svg" path="/HUB/buttons/assets/" exported="true" width="512" height="512"/>
+    <image id="q4bl1t" name="archers-arrow.png" path="/HUB/buttons/assets/" exported="true" scale9grid="0,0,-12,-12"/>
+    <image id="jryg1w" name="heart.svg" path="/HUB/buttons/assets/" exported="true" width="64" height="64"/>
+    <image id="jryg1x" name="war-pick.svg" path="/HUB/buttons/assets/" exported="true" scale9grid="0,0,-448,-448" width="64" height="64"/>
+    <image id="jryg1y" name="crossed-swords.svg" path="/HUB/buttons/assets/" exported="true" width="64" height="64"/>
+    <image id="jryg1z" name="bow-arrow.svg" path="/HUB/buttons/assets/" exported="true" width="64" height="64"/>
     <component id="g3ad20" name="Button4.xml" path="/Chat/"/>
-    <image id="g3ad21" name="已应战.svg" path="/Chat/assets/" width="200" height="200"/>
+    <image id="g3ad21" name="已应战.svg" path="/Chat/assets/" width="64" height="64"/>
     <component id="g3ad22" name="Button5.xml" path="/Chat/"/>
-    <image id="g3ad24" name="战斗 作战.svg" path="/Chat/assets/" width="200" height="200"/>
-    <image id="g3ad25" name="约战.svg" path="/Chat/assets/" width="200" height="200"/>
+    <image id="g3ad24" name="战斗 作战.svg" path="/Chat/assets/" width="64" height="64"/>
+    <image id="g3ad25" name="约战.svg" path="/Chat/assets/" width="64" height="64"/>
     <component id="g3ad26" name="Button6.xml" path="/Chat/"/>
-    <image id="g3ad27" name="golden-fever.png" path="/Chat/assets/"/>
+    <image id="g3ad27" name="golden-fever.svg" path="/Chat/assets/" width="64" height="64"/>
     <component id="g3ad28" name="Button7.xml" path="/Chat/"/>
-    <image id="g3ad29" name="move.png" path="/Chat/assets/"/>
+    <image id="g3ad29" name="move.svg" path="/Chat/assets/" scale9grid="0,0,-139,-139" width="64" height="64"/>
     <sound id="chdo2a" name="MG动画转场音效-唰唰呼呼嗖嗖滑动移动-深的低音鼓，电影的影_爱给网_aigei_com.wav" path="/Chat/assets/audios/"/>
     <sound id="chdo2b" name="按钮按键-很酷-用户界面-游戏提示音_系统提示音(Cool _爱给网_aigei_com.wav" path="/Chat/assets/audios/"/>
     <sound id="chdo2c" name="光标-轻击光标按钮-游戏提示音-系统_爱给网_aigei_com.wav" path="/Chat/assets/audios/"/>
@@ -53,6 +50,7 @@
     <sound id="chdo2h" name="MG动画Motion Graphic音效-流行的 x3(Po_爱给网_aigei_com.mp3" path="/Chat/assets/audios/"/>
     <sound id="chdo2i" name="单位攻击声.mp3" path="/HUB/assets/audios/"/>
     <sound id="chdo2j" name="单位生成声.mp3" path="/HUB/assets/audios/"/>
+    <component id="ls7r2m" name="Component1.xml" path="/Chat/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

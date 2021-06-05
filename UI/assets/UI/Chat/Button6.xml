@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="62,62" pivot="0.5,0.5" extention="Button" mask="n3_g3ad">
-    <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
-    <displayList>
-        <graph id="n0_g3ad" name="n0" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0"
-               fillColor="#fffb4c01">
-            <gearDisplay controller="button" pages="0"/>
-            <relation target="" sidePair="width-width,height-height"/>
-        </graph>
-        <graph id="n1_g3ad" name="n1" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0"
-               fillColor="#ffef6428">
-            <gearDisplay controller="button" pages="2"/>
-            <relation target="" sidePair="width-width,height-height"/>
-        </graph>
-        <graph id="n2_g3ad" name="n2" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0"
-               fillColor="#fffb4c01">
-            <gearDisplay controller="button" pages="1,3"/>
-            <relation target="" sidePair="width-width,height-height"/>
-        </graph>
-        <graph id="n3_g3ad" name="n3" xy="-1,0" size="64,62" type="polygon"
-               points="0,0,64,0,59.94305,18.79648,45.29849,42.3535,20,58,0,62"/>
-        <image id="n5_g3ad" name="n5" src="g3ad27" fileName="Chat/assets/golden-fever.png" xy="0,0" size="38,38"/>
-    </displayList>
-    <Button downEffect="scale" downEffectValue=".9"/>
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <graph id="n0_g3ad" name="fg" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0" fillColor="#fffb4c01">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n1_g3ad" name="n1" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0" fillColor="#ffef6428">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n2_g3ad" name="n2" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0" fillColor="#fffb4c01">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n3_g3ad" name="n3" xy="-1,0" size="64,62" type="polygon" points="0,0,64,0,59.94305,18.79648,45.29849,42.3535,20,58,0,62"/>
+    <image id="n5_g3ad" name="icon" src="g3ad27" fileName="Chat/assets/golden-fever.svg" xy="0,0" size="45,44"/>
+  </displayList>
+  <Button downEffect="scale" downEffectValue=".9"/>
 </component>
