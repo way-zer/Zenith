@@ -50,7 +50,9 @@
     <sound id="chdo2h" name="MG动画Motion Graphic音效-流行的 x3(Po_爱给网_aigei_com.mp3" path="/Chat/assets/audios/"/>
     <sound id="chdo2i" name="单位攻击声.mp3" path="/HUB/assets/audios/"/>
     <sound id="chdo2j" name="单位生成声.mp3" path="/HUB/assets/audios/"/>
-    <component id="ls7r2m" name="Component1.xml" path="/Chat/"/>
+    <image id="ls7r2k" name="msg.svg" path="/Chat/" scale9grid="0,0,-100,-100" width="100" height="100"/>
+    <component id="asx92l" name="MsgPopover.xml" path="/Chat/" exported="true"/>
+    <image id="mz0o2n" name="msg2.png" path="/Chat/assets/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

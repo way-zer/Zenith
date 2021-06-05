@@ -122,6 +122,7 @@ export abstract class BaseUnit {
      */
     protected updateMove(): void {
         p2ToDisplay(this.physic, this.display)
+        this.display.rotation = 0
         if (this.move) {
             this.move.update(Time.deltaTime)
             const {position, velocity} = this.physic

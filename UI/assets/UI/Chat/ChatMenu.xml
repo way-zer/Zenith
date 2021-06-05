@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="131,131" pivot="0.5,0.5">
   <displayList>
-    <graph id="n5_g3ad" name="n5" xy="2,2" size="126,126" type="eclipse" lineSize="5" fillColor="#ff990033"/>
+    <graph id="n5_g3ad" name="n5" xy="3,3" size="125,127" type="eclipse" lineSize="5" fillColor="#ff990033"/>
     <component id="n13_g3ad" name="btn1" src="g3ad28" fileName="Chat/Button7.xml" xy="2,3">
       <Button sound="ui://67fzhugfchdo2h"/>
     </component>

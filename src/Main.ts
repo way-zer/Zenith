@@ -10,6 +10,7 @@ import TheUI from './ui/TheUI'
 import {TheLoading} from './ui/TheLoading'
 import NetworkMgr from './game/NetworkMgr'
 import {config} from './config'
+import {Sounds} from './ui/components/Sounds'
 
 export class Main extends DisplayObjectContainer {
     constructor() {
@@ -34,6 +35,9 @@ export class Main extends DisplayObjectContainer {
             await RES.loadConfig('resource/default.res.json', 'resource/')
             await RES.loadGroup('preload', 0, loadingView)
             this.stage.removeChild(loadingView)
+            RES.loadGroup('audio', 0).then(() => {
+                Sounds.init()
+            })
         } catch (e) {
             console.error(e)
         }
@@ -67,9 +71,19 @@ export class Main extends DisplayObjectContainer {
         ResourceMgr.update()
         EntityMgr.update()
         PlayerMgr.update()
+        this.extUpdate()
 
         TheUI.update()
         NetworkMgr.batchSend()
+    }
+
+    /**游戏有关不便分类的更新*/
+    extUpdate() {
+        if (NetworkMgr.state != 'gaming') return
+        if (NetworkMgr.timeToEnd <= 0)
+            TheUI.gameOver().then()
+        else if (NetworkMgr.timeToEnd < 120 && Sounds.playingMusic != Sounds.end)
+            Sounds.play('end')
     }
 
     static reset() {

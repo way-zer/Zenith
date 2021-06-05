@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1280,720" overflow="hidden" opaque="false" bgColorEnabled="true" bgColor="#21373d">
   <displayList>
-    <text id="n12_t5xr" name="score" xy="523,0" size="234,90" fontSize="32" color="#cccccc" align="center" vAlign="middle" autoSize="none" text="1000"/>
-    <image id="n41_hhq5" name="n41" src="hhq5r" fileName="HUB/assets/UI_CRB_Basekit_1_257_841.tex.png" xy="1041,24" size="241,323" group="n21_p941"/>
-    <list id="n16_10a9g" name="list" xy="1087,47" size="177,289" group="n21_p941" selectionMode="none" overflow="scroll" defaultItem="ui://67fzhugfq66rc" autoClearItems="true">
+    <text id="n12_t5xr" name="score" xy="578,6" size="124,64" fontSize="48" color="#cccccc" align="center" vAlign="middle" letterSpacing="4" text="1000">
+      <relation target="" sidePair="center-center"/>
+    </text>
+    <image id="n41_hhq5" name="n41" src="hhq5r" fileName="HUB/assets/UI_CRB_Basekit_1_257_841.tex.png" xy="1013,14" size="241,323" group="n21_p941"/>
+    <list id="n16_10a9g" name="list" xy="1059,37" size="177,289" group="n21_p941" selectionMode="none" overflow="scroll" defaultItem="ui://67fzhugfq66rc" autoClearItems="true">
       <item title="test01" name="1"/>
       <item title="2"/>
       <item title="3"/>
@@ -11,8 +13,12 @@
       <item/>
       <item/>
     </list>
-    <component id="n64_ls7r" name="chat" src="p941e" fileName="Chat/emoji.xml" xy="574,294" group="n21_p941" scale="2,2" visible="false"/>
-    <group id="n21_p941" name="_ranklist" xy="574,24" size="708,401"/>
+    <group id="n21_p941" name="_ranklist" xy="1013,14" size="241,323" advanced="true">
+      <relation target="" sidePair="right-right,top-top"/>
+    </group>
+    <component id="n64_ls7r" name="chat" src="p941e" fileName="Chat/ChatMenu.xml" xy="574,315" scale="2,2" visible="false">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
     <image id="n43_hhq5" name="n43" src="hhq5t" fileName="HUB/assets/UI_CRB_Basekit_1_353_457.tex.png" xy="1015,604" size="271,111" group="n24_p941"/>
     <text id="n23_p941" name="_title" xy="1046,615" size="127,19" group="n24_p941" fontSize="12" autoSize="none" text="资源"/>
     <text id="n25_p941" name="_number" xy="1189,616" size="68,19" group="n24_p941" fontSize="12" autoSize="none" text="000&#xA;"/>
@@ -21,5 +27,8 @@
       <item/>
       <item/>
     </list>
+    <text id="n65_128x1" name="endTime" xy="602,68" size="76,39" fontSize="28" color="#996600" align="center" vAlign="middle" text="10:59">
+      <relation target="" sidePair="center-center"/>
+    </text>
   </displayList>
 </component>

@@ -105,9 +105,7 @@ export class EntityMgr extends egret.DisplayObjectContainer {
         if (unit == this.core) {
             return TheUI.gameOver().then()
         }
-        this.children.delete(unit)
-        this.removeChild(unit.display)
-        TheWorld.physics.removeBody(unit.physic)
+        this.removeUnsafe(unit)
         if (NetworkMgr.isMaster) {
             const all = unit.baseEnergy * config.game.resOnDeath
             const num = Math.min(config.game.resNumOnDeath, all / config.game.resEnergy)
@@ -116,6 +114,12 @@ export class EntityMgr extends egret.DisplayObjectContainer {
                 ResourceMgr.generate(x, y, Math.sqrt(all / num / config.game.resEnergy))
             }
         }
+    }
+
+    removeUnsafe(unit: BaseUnit) {
+        this.children.delete(unit)
+        this.removeChild(unit.display)
+        TheWorld.physics.removeBody(unit.physic)
     }
 
     init(layer: number) {
@@ -150,6 +154,12 @@ export class EntityMgr extends egret.DisplayObjectContainer {
         })
         NetworkMgr.on(EntityMgr.event_listUnit, ({list, sender}) => {
             list.forEach(it => this.addUnitF(Object.assign({sender}, it)))
+        })
+        NetworkMgr.on(NetworkMgr.event_quitPlayer, ({sender}) => {
+            this.children.forEach(it => {
+                if (it.player == sender.myInfo)
+                    this.removeUnsafe(it)
+            })
         })
         NetworkMgr.on(EntityMgr.event_death, this.onDeathF.bind(this))
     }

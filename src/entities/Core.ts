@@ -5,6 +5,7 @@ import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
 import NetworkMgr from '../game/NetworkMgr'
 import {EventKey} from '../utils/Event'
 import {Player} from '@leancloud/play'
+import {ChatDisplay} from './comp/ChatDisplay'
 
 type CreateUnitSync = {
     id: string, targetId: string, type: UnitType
@@ -13,6 +14,8 @@ type CreateUnitSync = {
 export class Core extends BaseUnit {
     readonly type: 'Core' = 'Core'
     energyTransfer = new p2.Circle()
+    chat = new ChatDisplay(this)
+
     maxEnergy = Infinity
     attackSpeed = 300
     energyAsHealthRate = 2
@@ -28,6 +31,7 @@ export class Core extends BaseUnit {
         super.init()
         this.physic.otherShape.push(this.energyTransfer)
         this.physic.updateShape()
+        this.display.addChild(this.chat)
     }
 
     updateBody() {
@@ -101,5 +105,6 @@ export class Core extends BaseUnit {
             if (t && t instanceof Core)
                 t.createUnitF(sync)
         })
+        ChatDisplay.registerEvents()
     }
 }

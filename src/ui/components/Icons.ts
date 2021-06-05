@@ -5,7 +5,6 @@ class Icons {
     swords: egret.Texture
     bow: egret.Texture
     heart: egret.Texture
-
     arrow: egret.Texture
 
     init() {

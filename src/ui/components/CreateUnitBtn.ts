@@ -21,7 +21,7 @@ export class CreateUnitBtn {
         this.obj.getChild('price').asTextField.text = price.toString()
         this.obj.enabled = price <= (entityMgr.core?.energy || 0)
 
-        if (ControlMgr.key(['key' + this.key])) {
+        if (ControlMgr.key(['Key' + this.key])) {
             if (!this.pressed)
                 this.callback(this.type)
             this.pressed = true

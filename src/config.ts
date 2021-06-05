@@ -17,6 +17,7 @@ export const config = {
         height: 720 * 3,
     },
     game: {
+        time: 15 * 60,//game time in s
         resourceGenInterval: 10, //in ms
         resourceGenMax: 500,
         resEnergy: 3,

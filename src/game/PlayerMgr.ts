@@ -66,6 +66,9 @@ export class PlayerMgr {
             this.all.add(v)
             // }
         })
+        NetworkMgr.on(NetworkMgr.event_quitPlayer, ({sender}) => {
+            this.all.delete(sender.myInfo)
+        })
     }
 
     update() {

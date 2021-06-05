@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="200,200" anchor="true" bgColorEnabled="true" bgColor="#21373d">
+  <displayList>
+    <image id="n5_mz0o" name="n5" src="mz0o2n" fileName="Chat/assets/msg2.png" xy="0,-1" pivot="0.25,1" size="200,200" color="#66ccff"/>
+    <loader id="n3_9oy1" name="icon" xy="60,52" size="76,76" url="ui://67fzhugfg3ad29" align="center" vAlign="middle" color="#33ffff"/>
+  </displayList>
+</component>

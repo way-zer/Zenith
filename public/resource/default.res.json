@@ -1,64 +1,69 @@
 {
-	"groups":[
-		{
-			"keys":"UI,UI_atlas0,UI_chdo2b,UI_chdo2d,UI_chdo2e,UI_chdo2g,UI_chdo2h,UI_chdo2a",
-			"name":"preload"
-		},
-		{
-			"keys":"end_music,repeat_music",
-			"name":"audio"
-		}
-	],
-	"resources":[
-		{
-			"name":"UI",
-			"type":"bin",
-			"url":"assets/UI/UI.fui"
-		},
-		{
-			"name":"UI_atlas0",
-			"type":"image",
-			"url":"assets/UI/UI_atlas0.png"
-		},
-		{
-			"name":"UI_chdo2b",
-			"type":"sound",
-			"url":"assets/UI/UI_chdo2b.wav"
-		},
-		{
-			"name":"UI_chdo2d",
-			"type":"sound",
-			"url":"assets/UI/UI_chdo2d.wav"
-		},
-		{
-			"name":"UI_chdo2e",
-			"type":"sound",
-			"url":"assets/UI/UI_chdo2e.mp3"
-		},
-		{
-			"name":"UI_chdo2g",
-			"type":"sound",
-			"url":"assets/UI/UI_chdo2g.mp3"
-		},
-		{
-			"name":"UI_chdo2h",
-			"type":"sound",
-			"url":"assets/UI/UI_chdo2h.mp3"
-		},
-		{
-			"name":"UI_chdo2a",
-			"type":"sound",
-			"url":"assets/UI/UI_chdo2a.wav"
-		},
-		{
-			"name":"end_music",
-			"type":"sound",
-			"url":"assets/end.mp3"
-		},
-		{
-			"name":"repeat_music",
-			"type":"sound",
-			"url":"assets/repeat.mp3"
-		}
-	]
+  "groups": [
+    {
+      "name": "preload",
+      "keys": "bgGrid,UI,UI_atlas0,UI_chdo2b,UI_chdo2d,UI_chdo2e,UI_chdo2g,UI_chdo2h,UI_chdo2a"
+    },
+    {
+      "name": "audio",
+      "keys": "end_music,repeat_music"
+    }
+  ],
+  "resources": [
+    {
+      "name": "bgGrid",
+      "type": "image",
+      "url": "assets/bg_grid.png"
+    },
+    {
+      "name": "UI",
+      "type": "bin",
+      "url": "assets/UI/UI.fui"
+    },
+    {
+      "name": "UI_atlas0",
+      "type": "image",
+      "url": "assets/UI/UI_atlas0.png"
+    },
+    {
+      "name": "UI_chdo2b",
+      "type": "sound",
+      "url": "assets/UI/UI_chdo2b.wav"
+    },
+    {
+      "name": "UI_chdo2d",
+      "type": "sound",
+      "url": "assets/UI/UI_chdo2d.wav"
+    },
+    {
+      "name": "UI_chdo2e",
+      "type": "sound",
+      "url": "assets/UI/UI_chdo2e.mp3"
+    },
+    {
+      "name": "UI_chdo2g",
+      "type": "sound",
+      "url": "assets/UI/UI_chdo2g.mp3"
+    },
+    {
+      "name": "UI_chdo2h",
+      "type": "sound",
+      "url": "assets/UI/UI_chdo2h.mp3"
+    },
+    {
+      "name": "UI_chdo2a",
+      "type": "sound",
+      "url": "assets/UI/UI_chdo2a.wav"
+    },
+    {
+      "name": "end_music",
+      "type": "sound",
+      "url": "assets/end.mp3"
+    },
+    {
+      "name": "repeat_music",
+      "type": "sound",
+      "url": "assets/repeat.mp3"
+    }
+  ]
 }

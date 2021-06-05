@@ -21,6 +21,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
     client: Client
     /**当前网络状态*/
     state: 'unConnect' | 'connecting' | 'reconnect' | 'gaming' = 'unConnect'
+    endTime: number = Number.MAX_VALUE
     batchEvents = [] as { event: number, data: any }[]
 
     constructor() {
@@ -34,24 +35,33 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         this.listen()
     }
 
+    /**@return 距离结束的时间,单位s */
+    get timeToEnd(): number {
+        return Math.round(this.endTime - Date.now() / 1000)
+    }
+
     /**
      * 连接到服务器,加入随机房间
      * @throws any 如果网络连接中出现任何问题
      */
     async connect() {
+        if (this.state == 'connecting') return
         this.batchEvents.length = 0
+        this.state = 'connecting'
         await this.client.connect()
         try {
             await this.client.joinRandomRoom()
         } catch (e) {
             const {code} = e
-            if (code == 4301)
-                await this.client.createRoom({
-                    //TODO customRoom
-                })
-            else throw e
+            if (code == 4301) {
+                await this.client.createRoom()
+                const endTime = Math.round(Date.now() / 1000 + config.game.time)
+                await this.client.room.setCustomProperties({endTime})
+            } else throw e
         }
-        this.state = 'connecting'
+        setTimeout(() => {
+            this.endTime = this.client.room.customProperties.endTime
+        }, 1000)
         this.emit(this.event_joined, {sender: this.client.player})
         EntityMgr.addUnitRandomly('Core')
         this.state = 'gaming'
