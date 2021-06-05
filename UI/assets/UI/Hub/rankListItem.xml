@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="200,34">
+<component size="200,30">
   <displayList>
-    <text id="n0_10a9g" name="name" xy="0,0" size="74,34" fontSize="24" vAlign="middle" bold="true" text="name">
-      <relation target="" sidePair="left-left"/>
-    </text>
-    <text id="n1_p941" name="score" xy="126,0" size="74,34" fontSize="24" color="#ffcc00" align="right" vAlign="middle" text="10000">
-      <relation target="" sidePair="right-right"/>
-    </text>
+    <text id="n0_10a9g" name="name" xy="0,0" size="119,30" fontSize="18" vAlign="middle" autoSize="none" bold="true" text="name"/>
+    <text id="n1_p941" name="score" xy="134,0" size="66,30" fontSize="18" color="#ffcc00" align="right" vAlign="middle" autoSize="none" text="10000"/>
   </displayList>
 </component>

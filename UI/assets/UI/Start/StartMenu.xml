@@ -13,7 +13,7 @@
     <group id="n43_jdif" name="_Title" xy="264,-33" size="762,471"/>
     <image id="n36_hhq5" name="n36" src="hhq5i" fileName="Start/assets/PlayerPathContent_TEMP_8_515.tex.png" xy="461,481" size="360,120"/>
     <component id="n28_t5xr" name="btn" src="t5xr5" fileName="Start/Button_Start.xml" xy="460,479">
-      <Button titleColor="#000000" titleFontSize="75"/>
+      <Button titleColor="#000000" titleFontSize="75" sound="ui://67fzhugfchdo2d"/>
     </component>
     <text id="n44_jdif" name="n44" xy="590,376" size="100,34" group="n46_jdif" fontSize="24" color="#ffffff" align="center" vAlign="middle" text="最终得分"/>
     <text id="n45_jdif" name="score" xy="570,407" size="140,64" group="n46_jdif" fontSize="48" text="10000"/>

@@ -1,21 +1,16 @@
 {
-  "libview.firstColumnWidth": 378,
+  "libview.firstColumnWidth": 283,
   "libview.iconScale": 0,
   "doc.openedDocs": [
     "ui://67fzhugfhhq51g",
-    "ui://67fzhugft5xr5",
     "ui://67fzhugft5xr8",
     "ui://67fzhugfhhq51c",
-    "ui://67fzhugfhhq51d",
-    "ui://67fzhugfhhq516",
-    "ui://67fzhugfhhq51b",
-    "ui://67fzhugfq66rc",
-    "ui://67fzhugfhhq51l"
+    "ui://67fzhugfp941e"
   ],
   "test.device": "720p Phone",
   "canvasColor": 10066329,
   "auxline2": true,
-  "doc.activeDoc": "ui://67fzhugft5xr8",
+  "doc.activeDoc": "ui://67fzhugfhhq51c",
   "libview.twoColumn": false,
   "libview.expandedNodes": [
     "67fzhugf",
@@ -25,9 +20,11 @@
     "67fzhugf",
     "/HUB/assets/",
     "67fzhugf",
+    "/HUB/assets/audios/",
+    "67fzhugf",
     "/HUB/buttons/",
     "67fzhugf",
-    "/HUB/buttons/assets/"
+    "/Start/"
   ],
   "auxline1": true,
   "snapToGrid": true,

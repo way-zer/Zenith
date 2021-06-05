@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="62,62" pivot="0.5,0.5" extention="Button" mask="n4_g3ad">
+    <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+    <displayList>
+        <graph id="n0_g3ad" name="n0" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0"
+               fillColor="#ffffc700">
+            <gearDisplay controller="button" pages="0"/>
+            <relation target="" sidePair="width-width,height-height"/>
+        </graph>
+        <graph id="n1_g3ad" name="n1" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0"
+               fillColor="#ffffcc33">
+            <gearDisplay controller="button" pages="2"/>
+            <relation target="" sidePair="width-width,height-height"/>
+        </graph>
+        <graph id="n2_g3ad" name="n2" xy="0,0" size="62,62" touchable="false" type="rect" lineSize="0"
+               fillColor="#ffffcc00">
+            <gearDisplay controller="button" pages="1,3"/>
+            <relation target="" sidePair="width-width,height-height"/>
+        </graph>
+        <graph id="n4_g3ad" name="n4" xy="0,0" size="62,62" type="polygon"
+               points="7,42,18.66164,21.32077,37.97236,6.680065,62,0,62,62,0,62"/>
+        <image id="n3_g3ad" name="n3" src="g3ad29" fileName="Chat/assets/move.png" xy="16,15" size="40,40"/>
+    </displayList>
+    <Button downEffect="scale" downEffectValue=".9"/>
+</component>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="131,131" mask="n5_g3ad">
+    <displayList>
+        <graph id="n5_g3ad" name="n5" xy="2,2" size="126,126" type="eclipse" lineSize="5" fillColor="#ff990033"/>
+        <component id="n13_g3ad" name="n13" src="g3ad28" fileName="Chat/Button7.xml" xy="2,3">
+            <Button sound="ui://67fzhugfchdo2h"/>
+        </component>
+        <component id="n6_g3ad" name="n6" src="g3ad20" fileName="Chat/Button4.xml" xy="65,3">
+            <Button sound="ui://67fzhugfchdo2g" volume="90"/>
+        </component>
+        <component id="n10_g3ad" name="n10" src="g3ad22" fileName="Chat/Button5.xml" xy="2,66">
+            <Button sound="ui://67fzhugfchdo2a"/>
+        </component>
+        <component id="n11_g3ad" name="n11" src="g3ad26" fileName="Chat/Button6.xml" xy="65,66">
+            <Button sound="ui://67fzhugfchdo2e"/>
+        </component>
+    </displayList>
+</component>
