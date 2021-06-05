@@ -35,7 +35,7 @@ class TheWorld extends DisplayObjectContainer {
     }
 
     private setupWorld() {
-        this.physics.sleepMode = p2.World.BODY_SLEEPING
+        this.physics.sleepMode = p2.World.NO_SLEEPING
         this.physics.applyGravity = false
         this.physics.applyDamping = false
         this.physics.useFrictionGravityOnZeroGravity = false

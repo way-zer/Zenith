@@ -62,7 +62,7 @@ export class ResourceMgr extends DisplayObjectContainer {
             id: ResourceMgr.lastGenerate++,
             x, y, scale,
         }
-        NetworkMgr.send(ResourceMgr.event_generate, info)
+        NetworkMgr.send(ResourceMgr.event_generate, info, true)
     }
 
     generateF(info: ResInfo) {
@@ -110,8 +110,11 @@ export class ResourceMgr extends DisplayObjectContainer {
 
     update() {
         if (NetworkMgr.isMaster && this.interval.check(config.game.resourceGenInterval)) {
-            if (this.numChildren < config.game.resourceGenMax) {
+            let i = 0
+            while (this.numChildren < config.game.resourceGenMax) {
+                if (i >= 15) break//one batch generate 15
                 this.generateRandom()
+                i++
             }
         }
     }

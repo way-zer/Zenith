@@ -1,6 +1,5 @@
 import {BaseUnit} from './BaseUnit'
 import {UnitBody} from './comp/PhysicBody'
-import {Interval} from '../utils/Time'
 import {drawPolygonPoints} from '../utils/display'
 import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
 import NetworkMgr from '../game/NetworkMgr'
@@ -13,12 +12,17 @@ type CreateUnitSync = {
 
 export class Core extends BaseUnit {
     readonly type: 'Core' = 'Core'
-    maxEnergy = Infinity
-    attackDamage = 10
-    attackSpeed = 200
-
-    scale: number = 1
     energyTransfer = new p2.Circle()
+    maxEnergy = Infinity
+    attackSpeed = 300
+    energyAsHealthRate = 2
+    //dynamic
+    attackDamage: number
+    scale: number
+    radius: number
+    speed: number
+
+    energy = 1000
 
     init() {
         super.init()
@@ -27,15 +31,34 @@ export class Core extends BaseUnit {
     }
 
     updateBody() {
-        this.scale = 1 + this.energy / 50
+        this.scale = Math.sqrt(this.energy / this.baseEnergy + 1)//sqrt of energy
         this.radius = 15 * this.scale
         this.energyTransfer.radius = 3 * this.radius
         super.updateBody()
     }
 
     updateMove() {
-        this.speed = 300 / Math.pow(this.energy + 1, 0.3)
+        //energy->speed : 0->250, 100->200, 900->126
+        this.speed = 1000 / Math.pow(this.energy + 100, 0.3)
         super.updateMove()
+    }
+
+    /**
+     * @override 增加收集范围圈内友军资源的功能
+     */
+    updateCollect() {
+        super.updateCollect()
+        for (let it of this.energyTransfer.other.values()) {
+            if (it instanceof UnitBody && it.unit.player.local) {
+                this.energy += it.unit.energy
+                it.unit.energy = 0
+            }
+        }
+    }
+
+    protected updateAttack() {
+        this.attackDamage = 15 * this.scale
+        super.updateAttack()
     }
 
     radiusChange() {
@@ -51,34 +74,6 @@ export class Core extends BaseUnit {
         graphics.endFill()
         graphics.lineStyle(1, 0xCF61D1, 0.3, undefined, undefined, undefined, undefined, undefined, [4, 5])
         graphics.drawCircle(0, 0, this.energyTransfer.radius)
-    }
-
-    attackInterval = new Interval()
-
-    updateAttack(): void {
-        if (!this.player.local) return
-        this.attackInterval.check(this.attackSpeed, false)
-        for (let it of this.physic.mainShape.other) {
-            if (it instanceof UnitBody && !it.unit.player.local) {
-                this.attackSync(it.unit)
-                this.attackInterval.reset()
-                return
-            }
-        }
-    }
-
-    attackF(other: BaseUnit) {
-        other.healthC.damage(this.attackDamage)
-    }
-
-    updateCollect() {
-        super.updateCollect()
-        for (let it of this.energyTransfer.other) {
-            if (it instanceof UnitBody && it.unit.player.local) {
-                this.energy += it.unit.energy
-                it.unit.energy = 0
-            }
-        }
     }
 
     //skill

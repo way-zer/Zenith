@@ -15,18 +15,13 @@ export class Time {
 }
 
 export class Interval {
-    private time = 0
+    private lastTime = 0
 
-    check(interval: number, reset: boolean = false): boolean {
-        this.time += Time.deltaTime
-        if (this.time > Time.deltaTime) {
-            if (reset) this.time = 0
-            return true
-        }
-        return false
+    check(interval: number): boolean {
+        return Time.now - this.lastTime > interval
     }
 
     reset() {
-        this.time = 0
+        this.lastTime = Time.now
     }
 }

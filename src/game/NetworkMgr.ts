@@ -75,6 +75,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
             this.emit(this.event_quitPlayer, {sender: leftPlayer})
         })
         this.client.on(Event.DISCONNECTED, async () => {//PLAYER_ACTIVITY_CHANGED PLAYER_ROOM_LEFT
+            console.log('disconnect')
             if (this.state != 'gaming') return
             Main.reset()
             await this.client.reconnectAndRejoin()
@@ -147,8 +148,8 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
 
     batchSend() {
         if (this.batchEvents.length) {
-            this.send(this.event_batch, {list: this.batchEvents}, false, true)
-            this.batchEvents.length = 0
+            const list = this.batchEvents.splice(0, 20)
+            this.send(this.event_batch, {list}, false, true)
         }
     }
 }

@@ -9,10 +9,14 @@ import {ProductUnit} from '../entities/ProductUnit'
 import {randomPosition, randomPositionAround} from '../utils/display'
 import {config} from '../config'
 import ResourceMgr from './ResourceMgr'
+import {WarriorUnit} from '../entities/WarriorUnit'
+import {AnchorUnit} from '../entities/AnchorUnit'
 
 export const unitMap = {
     Core,
     ProductUnit,
+    WarriorUnit,
+    AnchorUnit,
 }
 export type UnitType = keyof typeof unitMap
 
@@ -35,6 +39,13 @@ export class EntityMgr extends egret.DisplayObjectContainer {
      */
     get nextId() {
         return NetworkMgr.client.userId + '_' + (EntityMgr.lastId++)
+    }
+
+    /**
+     * 获取单位造价
+     */
+    price(type: UnitType): number {
+        return unitMap[type].prototype.baseEnergy
     }
 
     /**
@@ -144,4 +155,5 @@ export class EntityMgr extends egret.DisplayObjectContainer {
     }
 }
 
-export default new EntityMgr()
+export const entityMgr = new EntityMgr()
+export default entityMgr
