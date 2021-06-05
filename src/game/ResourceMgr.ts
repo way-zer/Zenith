@@ -78,7 +78,8 @@ export class ResourceMgr extends DisplayObjectContainer {
             const {x, y, id} = it as Res
             return {x, y, id}
         })
-        NetworkMgr.sendPeer(ResourceMgr.event_list, {list}, player.sender)
+        while(list.length)
+            NetworkMgr.sendPeer(ResourceMgr.event_list, {list:list.splice(0,100)}, player.sender)
     }
 
     /**
