@@ -21,6 +21,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
     client: Client
     /**当前网络状态*/
     state: 'unConnect' | 'connecting' | 'reconnect' | 'gaming' = 'unConnect'
+    /** endTime in second */
     endTime: number = Number.MAX_VALUE
     batchEvents = [] as { event: number, data: any }[]
 

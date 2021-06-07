@@ -65,6 +65,7 @@ export class ResourceMgr extends DisplayObjectContainer {
         NetworkMgr.send(ResourceMgr.event_generate, info, true)
     }
 
+    /**@internal*/
     generateF(info: ResInfo) {
         if (!NetworkMgr.isMaster) ResourceMgr.lastGenerate = info.id
         const inst = new Res(info)
@@ -72,6 +73,7 @@ export class ResourceMgr extends DisplayObjectContainer {
         this.addChild(inst)
     }
 
+    /**@internal*/
     list(player: { sender: Player }) {
         if (!NetworkMgr.isMaster) return
         const list = this.$children.map(it => {
@@ -99,6 +101,7 @@ export class ResourceMgr extends DisplayObjectContainer {
         return 0
     }
 
+    /**@internal*/
     destroyF(info: DestroyInfo) {
         const inst = this.getChildByName(info.name)
         if (inst) {

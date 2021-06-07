@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["./src"],
+  "out": "docs",
+  "umlClassDiagram": {
+    "type": "detailed",
+    "location": "local",
+    "format": "svg"
+  },
+  "readme": "none"
+}

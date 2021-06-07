@@ -15,7 +15,7 @@
   "test.device": "720p Phone",
   "canvasColor": 10066329,
   "auxline2": true,
-  "doc.activeDoc": "ui://67fzhugft5xr8",
+  "doc.activeDoc": "ui://67fzhugfasx92l",
   "libview.twoColumn": false,
   "libview.expandedNodes": [
     "67fzhugf",
@@ -26,12 +26,6 @@
     "/Chat/assets/",
     "67fzhugf",
     "/Chat/assets/audios/",
-    "67fzhugf",
-    "/HUB/",
-    "67fzhugf",
-    "/HUB/buttons/",
-    "67fzhugf",
-    "/HUB/buttons/assets/",
     "67fzhugf",
     "/Start/"
   ],

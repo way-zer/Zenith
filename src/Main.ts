@@ -27,6 +27,7 @@ export class Main extends DisplayObjectContainer {
     /**
      * 加载资源文件
      * 加载时自动显示TheLoading
+     * @internal
      */
     async loadResource() {
         try {
@@ -77,7 +78,8 @@ export class Main extends DisplayObjectContainer {
         NetworkMgr.batchSend()
     }
 
-    /**游戏有关不便分类的更新*/
+    /**游戏有关不便分类的更新
+     * @internal*/
     extUpdate() {
         if (NetworkMgr.state != 'gaming') return
         if (NetworkMgr.timeToEnd <= 0)

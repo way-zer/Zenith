@@ -80,6 +80,7 @@ export class EntityMgr extends egret.DisplayObjectContainer {
         NetworkMgr.send(EntityMgr.event_addUnit, {type, id: this.nextId, x, y})
     }
 
+    /**@internal*/
     addUnitF(info: BaseUnitSync & { sender: Player }) {
         const unit = new unitMap[info.type](info.sender.myInfo)
         unit.fromSync(info)
@@ -99,6 +100,7 @@ export class EntityMgr extends egret.DisplayObjectContainer {
         NetworkMgr.send(EntityMgr.event_death, {id: unit.display.name})
     }
 
+    /**@internal*/
     onDeathF(info: { id: string, sender: Player }) {
         const unit = this.getUnitById(info.id)
         if (!unit) return
@@ -116,6 +118,7 @@ export class EntityMgr extends egret.DisplayObjectContainer {
         }
     }
 
+    /**@internal*/
     removeUnsafe(unit: BaseUnit) {
         this.children.delete(unit)
         this.removeChild(unit.display)
