@@ -33,11 +33,11 @@ export class GameHub {
     update() {
         this.chatMenu.update()
         this.createUnits.forEach(it => it.update())
-        this.score.text = PlayerMgr.local.allEnergy.toString()
+        this.score.text = Math.floor(PlayerMgr.local.allEnergy).toString()
         const time = NetworkMgr.timeToEnd
         this.endTime.text = Math.floor(time / 60) + ':' + (time % 60)
         this.rankList.update(Array.from(PlayerMgr.all).map(it => (
-            {name: it.name, score: it.allEnergy}
+            {name: it.name, score: Math.floor(it.allEnergy)}
         )))
     }
 }

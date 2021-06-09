@@ -3,7 +3,7 @@ export const config = {
         speed: 2, //pixels pre ms
         maxScale: 5,
         minScale: 0.3,
-        minSelectTime: 120, //ms
+        minSelectTime: 150, //ms
         minSelectDistance: 50, //pixel
         background: 0x21373d,//color
     },
@@ -18,6 +18,7 @@ export const config = {
     },
     game: {
         time: 15 * 60,//game time in s
+        startEnergy: 0,
         resourceGenInterval: 10, //in ms
         resourceGenMax: 500,
         resEnergy: 3,

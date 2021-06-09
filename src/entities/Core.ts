@@ -6,6 +6,7 @@ import NetworkMgr from '../game/NetworkMgr'
 import {EventKey} from '../utils/Event'
 import {Player} from '@leancloud/play'
 import {ChatDisplay} from './comp/ChatDisplay'
+import {config} from '../config'
 
 type CreateUnitSync = {
     id: string, targetId: string, type: UnitType
@@ -25,7 +26,7 @@ export class Core extends BaseUnit {
     radius: number
     speed: number
 
-    energy = 1000
+    energy = config.game.startEnergy
 
     init() {
         super.init()

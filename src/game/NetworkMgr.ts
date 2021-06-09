@@ -52,17 +52,18 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         await this.client.connect()
         try {
             await this.client.joinRandomRoom()
+            this.endTime = this.client.room.customProperties.endTime
         } catch (e) {
             const {code} = e
             if (code == 4301) {
+                this.client.once(Event.ROOM_CUSTOM_PROPERTIES_CHANGED,()=>{
+                    this.endTime = this.client.room.customProperties.endTime
+                })
                 await this.client.createRoom()
                 const endTime = Math.round(Date.now() / 1000 + config.game.time)
                 await this.client.room.setCustomProperties({endTime})
             } else throw e
         }
-        setTimeout(() => {
-            this.endTime = this.client.room.customProperties.endTime
-        }, 1000)
         this.emit(this.event_joined, {sender: this.client.player})
         EntityMgr.addUnitRandomly('Core')
         this.state = 'gaming'
@@ -159,7 +160,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
 
     batchSend() {
         if (this.batchEvents.length) {
-            const list = this.batchEvents.splice(0, 20)
+            const list = this.batchEvents.splice(0, 10)
             this.send(this.event_batch, {list}, false, true)
         }
     }

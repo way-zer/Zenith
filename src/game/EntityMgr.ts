@@ -45,6 +45,7 @@ export class EntityMgr extends egret.DisplayObjectContainer {
      * 获取单位造价
      */
     price(type: UnitType): number {
+        //TODO 动态价格 与 单位等级
         return unitMap[type].prototype.baseEnergy
     }
 

@@ -39,6 +39,7 @@ export class ControlMgr {
     }
 
     update() {
+        //TODO 增加相机模式切换键P, 模式1为正常跟随模式 模式2停止跟随 1->2时修正offset 2->1时重置offset
         /// Update Camera
         const left = this.key(['KeyA', 'ArrowLeft']) ? 1 : 0
         const right = this.key(['KeyD', 'ArrowRight']) ? 1 : 0
@@ -73,10 +74,12 @@ export class ControlMgr {
     private listenTouch() {
         TheWorld.touchEnabled = true
         TheWorld.addEventListener(TouchEvent.TOUCH_BEGIN, (e) => {
+            if(e.target!=TheWorld)return
             this.selectArea.setTo(e.localX, e.localY, 0, 0)
             this.selectStart = Time.now
         }, undefined)
         TheWorld.addEventListener(TouchEvent.TOUCH_MOVE, (e) => {
+            if(e.target!=TheWorld)return
             this.selectArea.right = e.localX
             this.selectArea.bottom = e.localY
         }, undefined)
@@ -100,6 +103,7 @@ export class ControlMgr {
         TheWorld.addEventListener(TouchEvent.TOUCH_END, endTouch, undefined)
         TheWorld.addEventListener(TouchEvent.TOUCH_RELEASE_OUTSIDE, endTouch, undefined)
         TheWorld.addEventListener(TouchEvent.TOUCH_TAP, (e) => {
+            if(e.target!=TheWorld)return
             if (once) {//忽略拖动的第一次
                 once = false
                 return

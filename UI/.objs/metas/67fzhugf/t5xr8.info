@@ -1,7 +1,10 @@
 {
   "objectStatus": {
-    "n24_p941": {
-      "collapsed": true
+    "n25_p941": {
+      "hidden": true
+    },
+    "n23_p941": {
+      "hidden": true
     }
   },
   "fitScreen": "FitSize"

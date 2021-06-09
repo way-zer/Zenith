@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1280,720" overflow="hidden" initName="BackGround" designImageAlpha="30" bgColor="#3333ff">
-  <controller name="gameOver" pages="0,false,1,true" selected="0"/>
+  <controller name="gameOver" pages="0,false,1,true" selected="1"/>
   <displayList>
     <image id="n38_hhq5" name="n38" src="hhq5n" fileName="HUB/assets/UI_Datachron_0_0.tex.png" xy="0,0" size="1280,720" alpha="0.6"/>
     <image id="n35_hhq5" name="n35" src="hhq5l" fileName="Start/assets/UI_CRB_Basekit_1_0_1117.tex.png" xy="264,-33" size="762,471" group="n43_jdif" color="#a9d4ff"/>
@@ -11,9 +11,9 @@
     <component id="n28_t5xr" name="btn" src="t5xr5" fileName="Start/Button_Start.xml" xy="460,479">
       <Button titleColor="#000000" titleFontSize="75" sound="ui://67fzhugfchdo2d"/>
     </component>
-    <text id="n44_jdif" name="n44" xy="590,376" size="100,34" group="n46_jdif" fontSize="24" color="#ffffff" align="center" vAlign="middle" text="最终得分"/>
-    <text id="n45_jdif" name="score" xy="570,407" size="139,64" group="n46_jdif" fontSize="48" text="10000"/>
-    <group id="n46_jdif" name="_" xy="570,376" size="139,95" advanced="true">
+    <text id="n44_jdif" name="n44" xy="566,376" size="148,34" group="n46_jdif" fontSize="24" color="#ffffff" align="center" vAlign="middle" text="本局最高得分"/>
+    <text id="n45_jdif" name="score" xy="570,407" size="139,64" group="n46_jdif" fontSize="48" align="center" text="10000"/>
+    <group id="n46_jdif" name="_" xy="566,376" size="148,95" advanced="true">
       <gearDisplay controller="gameOver" pages="1"/>
     </group>
   </displayList>

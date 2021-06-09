@@ -14,10 +14,10 @@ export class AnchorUnit extends BaseUnit {
     }
 
     speed = 200
-    radius = 16
+    radius = 12
     maxHealth = 80
     attackDamage = 20
-    attackSpeed = 1500
+    attackSpeed = 2000
     maxEnergy = 30
     bulletSpeed = 1000
 
@@ -27,7 +27,7 @@ export class AnchorUnit extends BaseUnit {
     }
 
     radiusChange() {
-        this._attackShape.radius = this.radius * 3
+        this._attackShape.radius = this.radius * 10
         const graphics = this.display.graphics
         drawUnitGraph.apply(this)
         maskIconDisplay.call(this.iconDisplay, this.radius * 0.5)
@@ -54,7 +54,7 @@ export class AnchorUnit extends BaseUnit {
         const dist = () => (p2.vec2.distance([bullet.x, bullet.y], [other.display.x, other.display.y]))
         Tween.get(bullet, {
             onChange: () => {
-                if (dist() <= other.physic.mainShape.boundingRadius + bulletRadius) {
+                if (dist() <= other.physic.mainShape.boundingRadius + bulletRadius + 10) {
                     if (bullet.stage != null) {
                         this.display.parent.removeChild(bullet)
                         super.attackF(other)

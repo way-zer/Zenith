@@ -19,10 +19,11 @@
     <component id="n64_ls7r" name="chat" src="p941e" fileName="Chat/ChatMenu.xml" xy="574,315" scale="2,2" visible="false">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <image id="n43_hhq5" name="n43" src="hhq5t" fileName="HUB/assets/UI_CRB_Basekit_1_353_457.tex.png" xy="1015,604" size="271,111" group="n24_p941"/>
-    <text id="n23_p941" name="_title" xy="1046,615" size="127,19" group="n24_p941" fontSize="12" autoSize="none" text="资源"/>
-    <text id="n25_p941" name="_number" xy="1189,616" size="68,19" group="n24_p941" fontSize="12" autoSize="none" text="000&#xA;"/>
-    <group id="n24_p941" name="_info" xy="1015,604" size="271,111" visible="false" advanced="true"/>
+    <image id="n43_hhq5" name="n43" src="hhq5t" fileName="HUB/assets/UI_CRB_Basekit_1_353_457.tex.png" xy="984,569" size="302,146" group="n24_p941"/>
+    <text id="n23_p941" name="_title" xy="1046,615" size="127,19" group="n24_p941" visible="false" fontSize="12" autoSize="none" text="资源"/>
+    <text id="n25_p941" name="_number" xy="1189,616" size="68,19" group="n24_p941" visible="false" fontSize="12" autoSize="none" text="000&#xA;"/>
+    <text id="n66_w6z6" name="n66" xy="1011,585" size="245,102" group="n24_p941" fontSize="14" color="#ffffff" text="简易游戏教程:&#xA;目标: 收集资源,造兵打败其他人&#xA;鼠标拖动选择单位,点击移动&#xA;WASD或方向键移动视角,鼠标滚轮缩放&#xA;ZXC召唤单位,Q键显示表情框"/>
+    <group id="n24_p941" name="_info" xy="984,569" size="302,146" advanced="true"/>
     <list id="n63_g3ad" name="createUnitList" xy="148,638" size="562,72" layout="row" defaultItem="ui://67fzhugfhhq51c" autoClearItems="true">
       <item/>
       <item/>

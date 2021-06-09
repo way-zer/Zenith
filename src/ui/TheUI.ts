@@ -44,6 +44,7 @@ class TheUI extends DisplayObjectContainer {
     }
 
     async gameOver() {
+        this.gameHub.ref.visible = false
         this.startMenu.showGameOver()
         await NetworkMgr.disconnect()
         Sounds.stop()

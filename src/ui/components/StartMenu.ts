@@ -14,7 +14,7 @@ export class StartMenu {
     }
 
     showGameOver() {
-        this.score.text = PlayerMgr.highest.toString()
+        this.score.text = Math.floor(PlayerMgr.highest).toString()
         this.controller.setSelectedPage('true')
         this.ref.visible = true
     }
