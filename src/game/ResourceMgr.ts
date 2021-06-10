@@ -80,8 +80,8 @@ export class ResourceMgr extends DisplayObjectContainer {
             const {x, y, id} = it as Res
             return {x, y, id}
         })
-        while(list.length)
-            NetworkMgr.sendPeer(ResourceMgr.event_list, {list:list.splice(0,100)}, player.sender)
+        while (list.length)
+            NetworkMgr.sendPeer(ResourceMgr.event_list, {list: list.splice(0, 50)}, player.sender)
     }
 
     /**
@@ -94,7 +94,7 @@ export class ResourceMgr extends DisplayObjectContainer {
         const inst = body.displays[0]
         if (inst instanceof Res && this.contains(inst)) {
             if (destroy) {
-                NetworkMgr.send(ResourceMgr.event_destroy, {name: inst.name})
+                NetworkMgr.send(ResourceMgr.event_destroy, {name: inst.name}, true)
             }
             return inst.scale
         }

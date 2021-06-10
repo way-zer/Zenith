@@ -24,6 +24,7 @@ export class PlayerInfo implements PlayerInfoSync {
     allEnergy = 0
     units = {} as UnitMap
     local = false
+    lastPacketId = 0
 
     reset() {
         this.allEnergy = 0
@@ -74,7 +75,9 @@ export class PlayerMgr {
     update() {
         this.all.forEach(it => it.reset())
         EntityMgr.children.forEach(it => {
-            it.player.allEnergy += it.baseEnergy + it.energy
+            it.player.allEnergy += it.baseEnergy
+            if (it.type == 'Core')
+                it.player.allEnergy += it.energy
             it.player.units[it.type]++
         })
         this.highest = Math.max(this.highest, this.local.allEnergy)

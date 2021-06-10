@@ -2,15 +2,8 @@ import {BaseUnit} from './BaseUnit'
 import {UnitBody} from './comp/PhysicBody'
 import {drawPolygonPoints} from '../utils/display'
 import EntityMgr, {unitMap, UnitType} from '../game/EntityMgr'
-import NetworkMgr from '../game/NetworkMgr'
-import {EventKey} from '../utils/Event'
-import {Player} from '@leancloud/play'
 import {ChatDisplay} from './comp/ChatDisplay'
 import {config} from '../config'
-
-type CreateUnitSync = {
-    id: string, targetId: string, type: UnitType
-}
 
 export class Core extends BaseUnit {
     readonly type: 'Core' = 'Core'
@@ -53,10 +46,12 @@ export class Core extends BaseUnit {
      */
     updateCollect() {
         super.updateCollect()
+        if (!this.player.local) return
         for (let it of this.energyTransfer.other.values()) {
             if (it instanceof UnitBody && it.unit.player.local) {
-                this.energy += it.unit.energy
-                it.unit.energy = 0
+                const unit = it.unit
+                this.healthC.pickEnergy(unit.energy)
+                unit.healthC.useEnergy(unit.energy)
             }
         }
     }
@@ -82,30 +77,14 @@ export class Core extends BaseUnit {
     }
 
     //skill
-    static event_skill = new EventKey<CreateUnitSync>('core_createUnit')
-
     createUnit(type: UnitType) {
         const price = unitMap[type].prototype.baseEnergy
         if (price > this.energy) return
-        NetworkMgr.send(Core.event_skill, {id: this.id, targetId: EntityMgr.nextId, type: type})
-    }
-
-    createUnitF(sync: CreateUnitSync & { sender: Player }) {
-        const price = unitMap[sync.type].prototype.baseEnergy
-        if (price > this.energy) return
-        this.energy -= price
-        EntityMgr.addUnitF({
-            id: sync.targetId, type: sync.type, sender: sync.sender,
-            x: this.display.x, y: this.display.y,
-        })
+        this.healthC.useEnergy(price)
+        EntityMgr.addUnit(type, this.display.x, this.display.y)
     }
 
     static registerNetwork() {
-        NetworkMgr.on(Core.event_skill, (sync) => {
-            const t = EntityMgr.getUnitById(sync.id)
-            if (t && t instanceof Core)
-                t.createUnitF(sync)
-        })
         ChatDisplay.registerEvents()
     }
 }

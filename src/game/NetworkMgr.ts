@@ -1,8 +1,9 @@
-import {Client, Event, Player, ReceiverGroup} from '@leancloud/play'
+import {Client, CustomEventData, Event, Player, PlayEvent, ReceiverGroup} from '@leancloud/play'
 import {config} from '../config'
 import {EventKey, MyEventEmitter} from '../utils/Event'
 import EntityMgr from './EntityMgr'
 import {Main} from '../Main'
+import playerMgr,{PlayerMgr} from './PlayerMgr'
 
 /**
  * 依赖LeanCloud提供的多人对战SDK，负责游戏的网络通信
@@ -24,6 +25,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
     /** endTime in second */
     endTime: number = Number.MAX_VALUE
     batchEvents = [] as { event: number, data: any }[]
+    delayPacket = [] as { sender: Player, payload: PlayEvent["customEvent"] }[]
 
     constructor() {
         super()
@@ -56,7 +58,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         } catch (e) {
             const {code} = e
             if (code == 4301) {
-                this.client.once(Event.ROOM_CUSTOM_PROPERTIES_CHANGED,()=>{
+                this.client.once(Event.ROOM_CUSTOM_PROPERTIES_CHANGED, () => {
                     this.endTime = this.client.room.customProperties.endTime
                 })
                 await this.client.createRoom()
@@ -76,6 +78,7 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         this.state = 'unConnect'
         await this.client.close()
         this.batchEvents.length = 0
+        this.delayPacket.length = 0
     }
 
     private listen() {
@@ -100,14 +103,8 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
                 this.state = 'gaming'
             }, 3000)
         })
-        this.client.on(Event.CUSTOM_EVENT, ({eventId, eventData, senderId}) => {
-            const key = EventKey.getById(eventId)
-            if (!key) {
-                console.log('event (id:' + eventId + ') not support: ', eventData)
-                return
-            }
-            const sender = this.client.room.getPlayer(senderId)
-            this.emit(key, Object.assign({sender}, eventData))
+        this.client.on(Event.CUSTOM_EVENT, (payload) => {
+            this.handlePacket(payload)
         })
         this.on(this.event_batch, ({list, sender}) => {
             list.forEach(({event: eventId, data}) => {
@@ -121,6 +118,30 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
         })
     }
 
+    private handlePacket(payload: PlayEvent["customEvent"]){
+        const {eventId, eventData, senderId} = payload
+        const key = EventKey.getById(eventId)
+        if (!key) {
+            console.log('event (id:' + eventId + ') not support: ', eventData)
+            return
+        }
+        const sender = this.client.room.getPlayer(senderId)
+        const {packetIdId, ...dataE} = eventData
+        if (!sender.myInfo) {
+            if(key==PlayerMgr.event_info){
+                this.emit(key,Object.assign({sender}, dataE))
+                return
+            }
+            this.delayPacket.push({sender, payload})
+        } else {
+            const delta = packetIdId - sender.myInfo.lastPacketId
+            if (delta != 1)
+                console.log('packet skipped', delta, eventData)
+            sender.myInfo.lastPacketId = packetIdId
+            this.emit(key, Object.assign({sender}, dataE))
+        }
+    }
+
     /**
      * 是否是Master,一个房间内仅存在一位master
      */
@@ -129,7 +150,9 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
     }
 
     private send0<T>(event: EventKey<T>, arg: T, options: { receiverGroup?: ReceiverGroup; targetActorIds?: number[]; }) {
-        this.client.sendEvent(event.id, arg, options).then()
+        playerMgr.local.lastPacketId++
+        const packetIdId = playerMgr.local.lastPacketId
+        this.client.sendEvent(event.id, Object.assign({packetIdId}, arg), options).then()
     }
 
     /**
@@ -159,11 +182,21 @@ export class NetworkMgr extends MyEventEmitter<{ sender: Player }> {
     }
 
     batchSend() {
-        if (this.batchEvents.length) {
+        while (this.batchEvents.length) {
             const list = this.batchEvents.splice(0, 10)
             this.send(this.event_batch, {list}, false, true)
+        }
+        while (this.delayPacket.length){
+            const obj = this.delayPacket.pop()
+            if(!obj)break
+            if(!obj.sender.myInfo){
+                this.delayPacket.push(obj)
+                break
+            }
+            this.handlePacket(obj.payload)
         }
     }
 }
 
-export default new NetworkMgr()
+const networkMgr = new NetworkMgr()
+export default networkMgr

@@ -50,14 +50,25 @@ export class EntityMgr extends egret.DisplayObjectContainer {
     }
 
     /**
+     * 临时保存已死亡单位
+     * 防止单位死亡时,网络同步找不到
+     */
+    private trashUnits = new Set<BaseUnit>()
+
+    /**
      * 通过id获取单位
      * @param id 单位唯一id
      */
     getUnitById(id: string): BaseUnit | null {
+        for (let it of this.trashUnits) {
+            if (it.id == id)
+                return it
+        }
         for (let it of this.children) {
             if (it.id == id)
                 return it
         }
+        console.warn('can\'t find unit' + id)
         return null
     }
 
@@ -124,6 +135,10 @@ export class EntityMgr extends egret.DisplayObjectContainer {
         this.children.delete(unit)
         this.removeChild(unit.display)
         TheWorld.physics.removeBody(unit.physic)
+        this.trashUnits.add(unit)
+        setTimeout(()=>{
+            this.trashUnits.delete(unit)
+        },3000)
     }
 
     init(layer: number) {
@@ -142,6 +157,7 @@ export class EntityMgr extends egret.DisplayObjectContainer {
     reset() {
         this.core = undefined
         this.children.clear()
+        this.trashUnits.clear()
         this.$children.length = 0
         TheWorld.physics.clear()
     }

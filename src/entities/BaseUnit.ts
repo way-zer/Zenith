@@ -78,21 +78,15 @@ export abstract class BaseUnit {
      * @default 接触到{@link attackShape}采集
      */
     protected updateCollect(): void {
+        if (!this.player.local) return
         for (const it of this.collectShape.other.values()) {
             if (this.energy < this.maxEnergy) {
                 const scale = ResourceMgr.isRes(it, true)
-                if (scale)
-                    this.collectSync(scale)
+                if (scale) {
+                    this.healthC.pickEnergy(config.game.resEnergy * scale * scale)
+                }
             }
         }
-    }
-
-    protected collectSync(scale: number) {
-        NetworkMgr.send(BaseUnit.event_collect, {id: this.id, scale})
-    }
-
-    protected collectF(scale: number) {
-        this.healthC.pickEnergy(config.game.resEnergy * scale * scale)
     }
 
     /**
@@ -170,14 +164,15 @@ export abstract class BaseUnit {
     }
 
     protected attackSync(other: BaseUnit) {
-        NetworkMgr.send(BaseUnit.event_attack, {id: this.id, targetId: other.id})
+        NetworkMgr.send(BaseUnit.event_attack, {id: this.id, targetId: other.id}, true)
     }
 
     /**
-     * @override
+     * @default 直接伤害{@link other}{@link attackDamage}
      */
     protected attackF(other: BaseUnit): void {
-        other.healthC.damage(this.attackDamage)
+        if (this.player.local)
+            other.healthC.damage(this, this.attackDamage)
     }
 
     //End Attack
@@ -229,8 +224,6 @@ export abstract class BaseUnit {
         NetworkMgr.on(BaseUnit.event_move, ({id, ...left}) => {
             EntityMgr.getUnitById(id)?.moveF(left)
         })
-        NetworkMgr.on(BaseUnit.event_collect, ({id, scale}) => {
-            EntityMgr.getUnitById(id)?.collectF(scale)
-        })
+        HealthControl.registerNetwork()
     }
 }
